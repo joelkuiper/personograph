@@ -21,10 +21,11 @@ w.median <- function(x, w) {
 #'
 #' from the data, this is a weighted approximation of absolute
 #' risk with control (calculated; from 0 to 1)
+#'
 #' @export
-#' @param ev.ctrl vector of event rates in the control group (/arm)
-#' @param n.ctrl a vector of sample sizes in the control group (/arm)
-#' @return the approximated Control Event Rates (CER)
+#' @param ev.ctrl Vector of event rates in the control group (/arm)
+#' @param n.ctrl A vector of sample sizes in the control group (/arm)
+#' @return Approximated Control Event Rates (CER)
 w.approx.cer <- function(ev.ctrl, n.ctrl) {
     study_cer <- ev.ctrl / n.ctrl
     w.median(study_cer, n.ctrl)
@@ -33,10 +34,11 @@ w.approx.cer <- function(ev.ctrl, n.ctrl) {
 #' Calculate the IER (Intervention Event Rates)
 #'
 #' @export
-#' @param cer absolute risk with control (calculated; from 0 to 1)
-#' @param point relative risk with intervention (direct from meta-analysis)
-#' @param units RR or OR as string
-#' @return the absolute risk with intervention as Intervention Event Rates (IER)
+#' @seealso \code{\link{w.approx.cer}}
+#' @param cer Absolute risk with control (calculated; from 0 to 1)
+#' @param point Relative risk with intervention (direct from meta-analysis)
+#' @param units The outcome measure, RR or OR as string
+#' @return Absolute risk with intervention as Intervention Event Rates (IER)
 calc.ier <- function(cer, point, units=sm) {
     if (units == "RR") {
         return(cer * point)
@@ -152,39 +154,6 @@ personograph <- function(data,
     }
 
     grid.draw(do.call(gList, grobs))
-
     popViewport()
-
     dev.flush()
 }
-
-
-## Demo
-data <- read.table(textConnection('
-          name ev.trt n.trt ev.ctrl n.ctrl
-1     Auckland     36   532      60    538
-2        Block      1    69       5     61
-3        Doran      4    81      11     63
-4        Gamsu     14   131      20    137
-5     Morrison      3    67       7     59
-6 Papageorgiou      1    71       7     75
-7      Tauesch      8    56      10     71
-'
-), header=TRUE)
-
-cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
-
-sm <- "RR"
-if (requireNamespace("meta", quietly = TRUE)) {
-    ## Calculate the OR or RR, we use meta package here
-    m <- meta::metabin(data[, "ev.trt"], data[, "n.trt"], data[, "ev.ctrl"], data[, "n.ctrl"], sm=sm)
-    point <- exp(m$TE.random) # meta returns outcomes on the log scale
-} else {
-    # Calculated Random Effects RR, using the meta package
-    point <- 0.5710092
-}
-
-ier <- calc.ier(cer, point)
-d <- uplift(ier, cer, T)
-
-personograph(d, colors=list(harmed="firebrick4", treated="olivedrab3", lost="azure4", healthy="azure3"))
