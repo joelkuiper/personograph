@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: c(person("Joel", "Kuiper", email = "jkuiper@doctorevidence.com", role = c("aut", "cre")), person("Iain", "Marshall", email = "iain.marshall@kcl.ac.uk", role = c("aut")))
 Description: What the package does (one paragraph)
 Depends: R (>= 3.1.0)
-License: GPLv3
+License: LGPL (>= 2.0, < 3) | Mozilla Public License
 LazyData: true
 Depends:
   grImport

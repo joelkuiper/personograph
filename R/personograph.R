@@ -1,5 +1,6 @@
 ## Util
 w.median <- function(x, w) {
+    ## Lifted from cwhmisc, http://www.inside-r.org/packages/cran/cwhmisc/docs/w.median
     if (missing(w)) w <- rep(1,length(x))
     ok <- complete.cases(x, w)
     x <- x[ok]
@@ -87,7 +88,7 @@ as.colors <- function(lst, palette=rainbow) {
 round.with.warn <- function(x, f=round, name=NULL) {
     rounded <- f(x)
     if(x > 0 && rounded == 0) {
-        warning(paste("truncating",ifelse(is.null(name), "a", name), "non-zero value of", x, "to 0"))
+        warning(paste("truncating", ifelse(is.null(name), "a", name), "non-zero value of", x, "to 0"))
     }
     rounded
 }
@@ -184,6 +185,6 @@ point <- exp(m$TE.random) # meta returns outcomes on the log scale
 
 ier <- calc.ier(cer, point)
 
-d <- uplift(ier, cer, F)
+d <- uplift(ier, cer, T)
 
-personograph(d, colors=list(harmed="firebrick3", treated="olivedrab3", lost="azure4", healthy="azure2"))
+personograph(d, colors=list(harmed="firebrick3", treated="olivedrab3", lost="azure4", healthy="azure3"))
