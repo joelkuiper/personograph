@@ -38,3 +38,6 @@ nbproject
 *.pyc
 *.out
 *.log
+
+Rplots.pdf
+Rtmp*
