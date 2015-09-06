@@ -1,8 +1,8 @@
 Package: personograph
-Title: What the Package Does (one line, title case)
+Title: Visualizes treatment effects using person icons, similar to Cates (NNT) charts
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Authors@R: c(person("Joel", "Kuiper", email = "jkuiper@doctorevidence.com", role = c("aut", "cre")), person("Iain", "Marshall", email = "iain.marshall@kcl.ac.uk", role = c("aut")))
 Description: What the package does (one paragraph)
-Depends: R (>= 3.2.0)
-License: What license is it under?
+Depends: R (>= 3.1.0)
+License: GPLv3
 LazyData: true

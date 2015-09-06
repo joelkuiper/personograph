@@ -16,7 +16,7 @@ w.median <- function(x, w) {
     max(x[ind1], x[ind2])
 }
 
-approx.cer <- function(ev.ctrl, n.ctrl) {
+w.approx.cer <- function(ev.ctrl, n.ctrl) {
     ## Calculate the CER (Control Event Rates)
     ## from the data, this is a weighted approximation of absolute
     ## risk with control (calculated; from 0 to 1)
@@ -73,7 +73,7 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     ## [harmed] people who would be harmed by treatment
     harmed <- max(cer-ier, 0)
 
-    list(healtyh=healthy, treated=treated, harmed=harmed, lost=lost)
+    list(healthy=healthy, treated=treated, harmed=harmed, lost=lost)
 }
 
 ## Plotting code
@@ -103,7 +103,7 @@ personograph <- function(data,
     devAskNewPage(ask)
 
     if(is.null(icon)) {
-        icon <- readPicture("~/Desktop/man214.ps.xml") # FIXME use inst
+        icon <- readPicture(system.file("icon.ps.xml", package="personograph"))
     }
 
     vp <- viewport(layout.pos.row=1, name="vp", width=unit(0.8, "npc"), height=unit(0.8, "npc"))
@@ -172,7 +172,7 @@ data <- read.table(textConnection('
 '
 ), header=TRUE)
 
-cer <- approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
+cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
 
 ## Calculate the OR or RR, we use meta package here
 library(meta)
@@ -186,4 +186,4 @@ ier <- calc.ier(cer, point)
 
 d <- uplift(ier, cer, F)
 
-personograph(d, colors=list(harmed="red", treated="green", lost="black", healtyh="gray"))
+personograph(d, colors=list(harmed="firebrick3", treated="olivedrab3", lost="azure4", healthy="azure2"))
