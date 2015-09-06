@@ -19,7 +19,7 @@ w.median <- function(x, w) {
 
 #' Calculate the CER (Control Event Rates)
 #'
-#' from the data, this is a weighted approximation of absolute
+#' Calculates the CER from the data, this is a weighted approximation of absolute
 #' risk with control (calculated; from 0 to 1)
 #'
 #' @export

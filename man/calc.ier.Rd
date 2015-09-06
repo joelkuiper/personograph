@@ -7,16 +7,19 @@
 calc.ier(cer, point, units = sm)
 }
 \arguments{
-\item{cer}{absolute risk with control (calculated; from 0 to 1)}
+\item{cer}{Absolute risk with control (calculated; from 0 to 1)}
 
-\item{point}{relative risk with intervention (direct from meta-analysis)}
+\item{point}{Relative risk with intervention (direct from meta-analysis)}
 
-\item{units}{RR or OR as string}
+\item{units}{The outcome measure, RR or OR as string}
 }
 \value{
-absolute risk with intervention
+Absolute risk with intervention as Intervention Event Rates (IER)
 }
 \description{
 Calculate the IER (Intervention Event Rates)
+}
+\seealso{
+\code{\link{w.approx.cer}}
 }
 

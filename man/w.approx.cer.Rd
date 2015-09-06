@@ -7,15 +7,15 @@
 w.approx.cer(ev.ctrl, n.ctrl)
 }
 \arguments{
-\item{ev.ctrl}{vector of event rates in the control group (/arm)}
+\item{ev.ctrl}{Vector of event rates in the control group (/arm)}
 
-\item{n.ctrl}{a vector of sample sizes in the control group (/arm)}
+\item{n.ctrl}{A vector of sample sizes in the control group (/arm)}
 }
 \value{
-the approximated CER
+Approximated Control Event Rates (CER)
 }
 \description{
-from the data, this is a weighted approximation of absolute
+Calculates the CER from the data, this is a weighted approximation of absolute
 risk with control (calculated; from 0 to 1)
 }
 
