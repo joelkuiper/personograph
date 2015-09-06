@@ -17,28 +17,27 @@ w.median <- function(x, w) {
     max(x[ind1], x[ind2])
 }
 
+#' Calculate the CER (Control Event Rates)
+#'
+#' from the data, this is a weighted approximation of absolute
+#' risk with control (calculated; from 0 to 1)
+#' @export
+#' @param ev.ctrl vector of event rates in the control group (/arm)
+#' @param n.ctrl a vector of sample sizes in the control group (/arm)
+#' @return the approximated Control Event Rates (CER)
 w.approx.cer <- function(ev.ctrl, n.ctrl) {
-    ## Calculate the CER (Control Event Rates)
-    ## from the data, this is a weighted approximation of absolute
-    ## risk with control (calculated; from 0 to 1)
-    ## input:
-    ##     ev.ctrl = a vector of event rates in the control group (/arm)
-    ##     n.ctrl = a vector of sample sizes in the control group (/arm)
-    ## output:
-    ##     the approximated CER
     study_cer <- ev.ctrl / n.ctrl
     w.median(study_cer, n.ctrl)
 }
 
-
+#' Calculate the IER (Intervention Event Rates)
+#'
+#' @export
+#' @param cer absolute risk with control (calculated; from 0 to 1)
+#' @param point relative risk with intervention (direct from meta-analysis)
+#' @param units RR or OR as string
+#' @return the absolute risk with intervention as Intervention Event Rates (IER)
 calc.ier <- function(cer, point, units=sm) {
-    ## IER (Intervention Event Rates)
-    ## input:
-    ##     cer = absolute risk with control (calculated; from 0 to 1)
-    ##     point = relative risk with intervention (direct from meta-analysis)
-    ##     units = RR/OR etc as string
-    ## output:
-    ##     absolute risk with intervention
     if (units == "RR") {
         return(cer * point)
     } else if(units == "OR") {
@@ -175,16 +174,17 @@ data <- read.table(textConnection('
 
 cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
 
-## Calculate the OR or RR, we use meta package here
-library(meta)
 sm <- "RR"
-m <- metabin(data[, "ev.trt"], data[, "n.trt"], data[, "ev.ctrl"], data[, "n.ctrl"], sm=sm)
-
-# Random effects meta analysis result
-point <- exp(m$TE.random) # meta returns outcomes on the log scale
+if (requireNamespace("meta", quietly = TRUE)) {
+    ## Calculate the OR or RR, we use meta package here
+    m <- meta::metabin(data[, "ev.trt"], data[, "n.trt"], data[, "ev.ctrl"], data[, "n.ctrl"], sm=sm)
+    point <- exp(m$TE.random) # meta returns outcomes on the log scale
+} else {
+    # Calculated Random Effects RR, using the meta package
+    point <- 0.5710092
+}
 
 ier <- calc.ier(cer, point)
-
 d <- uplift(ier, cer, T)
 
-personograph(d, colors=list(harmed="firebrick3", treated="olivedrab3", lost="azure4", healthy="azure3"))
+personograph(d, colors=list(harmed="firebrick4", treated="olivedrab3", lost="azure4", healthy="azure3"))
