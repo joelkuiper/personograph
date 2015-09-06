@@ -1,1 +1,10 @@
-exportPattern("^[^\\.]")
+import(graphics)
+import(grDevices)
+import(grImport)
+import(grid)
+
+export(
+    w.approx.cer,
+    calc.ier,
+    uplift,
+    personograph)
