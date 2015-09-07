@@ -26,9 +26,5 @@ if (requireNamespace("meta", quietly = TRUE)) {
 }
 
 ier <- calc.ier(cer, point, sm)
-d <- uplift(ier, cer, T)
 
-personograph(d,
-             fig.title="1980 of corticosteroid therapy",
-             fig.cap="Some caption",
-             colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"))
+plot(uplift(ier, cer, T))

@@ -230,6 +230,7 @@ personograph <- function(data,
     grid.draw(do.call(grobTree, grobs))
     popViewport()
 
+    font <- gpar(fontsize=10, col="azure4", fontfamily="Helvetica")
 
     if(draw.legend) {
         seekViewport("legend")
@@ -244,7 +245,6 @@ personograph <- function(data,
                                  heights=unit(0.25, "npc"))))
 
         idx <- 0
-        font <- gpar(fontsize=11, col="azure4")
         for(name in n)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx, width=unit(0.1, "npc")))
@@ -261,8 +261,7 @@ personograph <- function(data,
 
     if(!is.null(fig.cap)) {
         seekViewport("caption")
-        grid.text(fig.cap,
-                  gp = gpar(fontsize = 11, fontfamily="Helvetica", col="azure4"))
+        grid.text(fig.cap, gp = font)
     }
 
     dev.flush()
