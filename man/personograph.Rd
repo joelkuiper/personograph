@@ -18,9 +18,9 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{draw.legend}{Logical indicating whether to draw the legend}
 
-\item{icon}{A \code{grImport} \code{Picture} for the icon used, overwrites \code{icon.style}}
+\item{icon}{A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}}
 
-\item{icon.style}{A numeric from 1-11 which of the included icons to use}
+\item{icon.style}{A numeric from 1-11 indicating which of the included icons to use}
 
 \item{n.icons}{Number of icons to draw, defaults to 100}
 

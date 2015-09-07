@@ -127,8 +127,8 @@ round.with.warn <- function(x, f=round, name=NULL) {
 #'
 #' @export
 #' @param data A list of names to percentages (from 0 to 1)
-#' @param icon.style A numeric from 1-11 which of the included icons to use
-#' @param icon A \code{grImport} \code{Picture} for the icon used, overwrites \code{icon.style}
+#' @param icon.style A numeric from 1-11 indicating which of the included icons to use
+#' @param icon A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}
 #' @param n.icons Number of icons to draw, defaults to 100
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
 #' @param dimension A vector of c(rows, columns) for the dimensions of the grid
