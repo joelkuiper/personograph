@@ -63,7 +63,7 @@ calc.ier <- function(cer, point, units=sm) {
 #' @export
 #' @param ier Intervention Event Rates
 #' @param cer Control Event Rates
-#' @param higher_is_better bool indicating the direction of the outcome measure, default TRUE
+#' @param higher_is_better logical indicating the direction of the outcome measure, default TRUE
 #' @return A list of S3 class \code{personograph.uplift} with the following elements:
 #' \itemize{
 #' \item{happy}{people who are happy no matter what treatment}
@@ -104,11 +104,10 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
 }
 
 ## Plotting code
-library("grImport")
 as.colors <- function(lst, palette=rainbow) {
     n <- names(lst)
     colors <- palette(length(n))
-    sapply(n, function(name) { colors[[which(n == name)]]} ,simplify = FALSE, USE.NAMES = TRUE)
+    sapply(n, function(name) { colors[[which(n == name)]]}, simplify = FALSE, USE.NAMES = TRUE)
 }
 
 round.with.warn <- function(x, f=round, name=NULL) {
@@ -121,28 +120,36 @@ round.with.warn <- function(x, f=round, name=NULL) {
 
 #' Plots a personograph
 #'
-#' Plots a personogram from a list with with percentages.
+#' Plots a personograph from a list with with percentages.
 #' A personograph is a graphical represenation of relative benefit or harm, using a grid of icons with different colors.
 #' Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to Treat visualization).
-#' Although these could be seen as Marshall-Kuiper plots.
+#' Although these could be seen as Kuiper-Marshall plots.
 #'
 #' @export
 #' @param data A list of names to percentages (from 0 to 1)
 #' @param icon A \code{grImport} \code{Picture} for the icon used
 #' @param n.icons Number of icons to draw, defaults to 100
+#' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
 #' @param dimension A vector of c(rows, columns) for the dimensions of the grid
-#' @param dimension A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied
+#' @param colors A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied
 #' @param ask If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.
+#' @param fig.cap Figure caption
+#' @param fig.title Figure title
+#' @param draw.legend Logical indicating whether to draw the legend
 #' @return None.
 #' @examples
 #' data <- list(happy= 0.8884758, helped = 0.04784283, harmed = 0, sad = 0.06368133)
 #' personograph(data)
 personograph <- function(data,
-                icon=NULL,
-                n.icons=100,
-                dimension=ceiling(sqrt(c(n.icons, n.icons))),
-                colors=as.colors(data),
-                ask=dev.interactive(orNone=TRUE), ...) {
+                 fig.title=NULL,
+                 fig.cap=NULL,
+                 draw.legend=T,
+                 icon=NULL,
+                 n.icons=100,
+                 plot.width=0.6,
+                 dimension=ceiling(sqrt(c(n.icons, n.icons))),
+                 colors=as.colors(data),
+                 ask=dev.interactive(orNone=TRUE), ...) {
     devAskNewPage(FALSE)
     plot.new()
     devAskNewPage(ask)
@@ -151,8 +158,32 @@ personograph <- function(data,
         icon <- readPicture(system.file("icon.ps.xml", package="personograph"))
     }
 
-    vp <- viewport(layout.pos.row=1, name="vp", width=unit(0.8, "npc"), height=unit(0.8, "npc"))
-    pushViewport(vp)
+    master.rows <- sum(!is.null(fig.title), !is.null(draw.legend), !is.null(fig.cap))
+    master.heights <- c(0.2,
+                       1.0 - (master.rows * 0.1),
+                       ifelse(draw.legend, .1, 0),
+                       ifelse(!is.null(fig.cap), .1, 0))
+
+    masterLayout <- grid.layout(
+        nrow    = 4,
+        ncol    = 1,
+        heights = unit(master.heights, rep("null", 4)))
+
+    vp1 <- viewport(layout.pos.row=1, name="title")
+    vp2 <- viewport(layout.pos.row=2, name="plot")
+    vp3 <- viewport(layout.pos.row=3, name="legend")
+    vp4 <- viewport(layout.pos.row=4, name="caption")
+
+    pushViewport(vpTree(viewport(layout = masterLayout, name = "master"), vpList(vp1, vp2, vp3, vp4)))
+
+    if(!is.null(fig.title)) {
+        seekViewport("title")
+        grid.text(fig.title,
+                  gp = gpar(fontsize = 16, fontfamily="Helvetica", fontface="bold"))
+    }
+
+    seekViewport("plot")
+    pushViewport(viewport(width=unit(plot.width, "npc")))
 
     cols <- dimension[2]
     rows <- dimension[1]
@@ -163,7 +194,7 @@ personograph <- function(data,
     n <- names(data)
     counts <- sapply(n, function(name) {
         x <- data[[which(n == name)]]
-        round.with.warn(x * n.icons, name=name)} ,simplify = FALSE, USE.NAMES = TRUE)
+        round.with.warn(x * n.icons, name=name)}, simplify = FALSE, USE.NAMES = TRUE)
 
 
     ordered_names <- names(counts)
@@ -181,7 +212,7 @@ personograph <- function(data,
         for (j in 1:cols) {
             total <- total + 1
 
-            j_snake <- ifelse((i %% 2==1), j, cols - j + 1) # to group like icons together
+            j_snake <- ifelse((i %% 2 == 1), j, cols - j + 1) # to group like icons together
 
             x <- (j_snake * icon.width) - icon.width + (j_snake * (icon.width / cols))
             y <- i * row_height
@@ -196,8 +227,44 @@ personograph <- function(data,
         }
     }
 
-    grid.draw(do.call(gList, grobs))
+    grid.draw(do.call(grobTree, grobs))
     popViewport()
+
+
+    if(draw.legend) {
+        seekViewport("legend")
+        legend.cols <- length(n)
+        pushViewport(viewport(
+            width  = unit(0.8, "npc"),
+            x = 0.55,
+            just = "center",
+            layout = grid.layout(ncol=legend.cols * 2,
+                                 nrow=1,
+                                 respect=T,
+                                 heights=unit(0.25, "npc"))))
+
+        idx <- 0
+        font <- gpar(fontsize=11, col="azure4")
+        for(name in n)  {
+            idx <- idx + 1
+            pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx, width=unit(0.1, "npc")))
+            grid.circle(x=0.1, r=0.5, gp=gpar(fill=colors[[name]], col=NA))
+            popViewport()
+            idx <- idx + 1
+            pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
+            grid.text(x=-0.65, paste(name, "=", formatC(data[[name]], digits=3, width=3)), gp=font, just="left")
+            popViewport()
+        }
+
+        popViewport()
+    }
+
+    if(!is.null(fig.cap)) {
+        seekViewport("caption")
+        grid.text(fig.cap,
+                  gp = gpar(fontsize = 10, fontfamily="Helvetica", col="azure4"))
+    }
+
     dev.flush()
 }
 

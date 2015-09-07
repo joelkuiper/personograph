@@ -1,3 +1,5 @@
+library(grImport)
+
 ## Demo
 data <- read.table(textConnection('
           name ev.trt n.trt ev.ctrl n.ctrl
@@ -26,6 +28,9 @@ if (requireNamespace("meta", quietly = TRUE)) {
 ier <- calc.ier(cer, point)
 d <- uplift(ier, cer, F)
 
-png(width=400, height=600)
-personograph(d, colors=list(harmed="firebrick3", helped="olivedrab3", sad="azure4", happy="azure3"))
+png("~/Desktop/foo.png", width=600, height=800)
+personograph(d,
+             fig.title="1980 of corticosteroid therapy",
+             fig.cap="Some caption",
+             colors=list(harmed="firebrick3", helped="olivedrab3", sad="azure4", happy="azure3"))
 dev.off()
