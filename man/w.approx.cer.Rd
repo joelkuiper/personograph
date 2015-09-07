@@ -16,6 +16,6 @@ Approximated Control Event Rates (CER)
 }
 \description{
 Calculates the CER from the data, this is a weighted approximation of absolute
-risk with control (calculated; from 0 to 1)
+risk with control (from 0 to 1)
 }
 

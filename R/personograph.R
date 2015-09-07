@@ -20,7 +20,7 @@ w.median <- function(x, w) {
 #' Calculate the CER (Control Event Rates)
 #'
 #' Calculates the CER from the data, this is a weighted approximation of absolute
-#' risk with control (calculated; from 0 to 1)
+#' risk with control (from 0 to 1)
 #'
 #' @export
 #' @param ev.ctrl Vector of event rates in the control group (/arm)
@@ -51,40 +51,46 @@ calc.ier <- function(cer, point, units=sm) {
 
 #' "Uplift" from IER and CER
 #'
-#' Calculates the percentage [0,1] of people helped, harmed, lost and healty
+#' Calculates the percentage (from 0 to 1) of people helped, harmed, sad, and happy
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
 #' e.g. higher_is_better = T (default) for treatment efficacy, higher_is_better = F for
 #' adverse events.
 #'
+#' The adopted terminology is similar to that of Uplift modelling
+#' https://en.wikipedia.org/wiki/Uplift_modelling
+#'
 #' @export
 #' @param ier Intervention Event Rates
 #' @param cer Control Event Rates
-#' @param higher_is_better bool indicating the direction of the outcome measure
-#' @return A list with the following elements
-#' healthy, people who are happy no matter what treatment
-#' lost, people who are sad no matter what treatment
-#' helped, people who would be helped by treatment
-#' harmed, people who would be harmed by treatment
+#' @param higher_is_better bool indicating the direction of the outcome measure, default TRUE
+#' @return A list of S3 class \code{personograph.uplift} with the following elements:
+#' \itemize{
+#' \item{happy}{people who are happy no matter what treatment}
+#' \item{sad}{people who are sad no matter what treatment}
+#' \item{helped}{people who would be helped by treatment}
+#' \item{harmed}{people who would be harmed by treatment}
+#' }
+#' @examples
+#' ier <- 0.06368133
+#' cer <- 0.1115242
+#' uplift(ier, cer, T)
 uplift <- function(ier, cer, higher_is_better=NULL) {
     if(is.null(higher_is_better)) {
         higher_is_better <- T
         warning("Setting higher_is_better as outcome direction to TRUE")
     }
-
-    ## The adopted terminology is similar to that of Uplift modelling
-    ## https://en.wikipedia.org/wiki/Uplift_modelling
     if (higher_is_better == F) {
-        ## Always orient the numbers so that higher events represents a good outcome
+        ## Always orient the numbers so that higher events represents a happy outcome
         ier <- 1 - ier
         cer <- 1 - cer
     }
 
-    ## [healthy] people who are happy no matter what treatment
-    healthy <- min(ier, cer)
+    ## [happy] people who are happy no matter what treatment
+    happy <- min(ier, cer)
 
-    ## [lost] people who are sad no matter what treatment
-    lost <- 1-max(ier, cer)
+    ## [sad] people who are sad no matter what treatment
+    sad <- 1-max(ier, cer)
 
     ## [helped] people who would be saved by treatment
     helped <- max(ier-cer, 0)
@@ -92,7 +98,9 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     ## [harmed] people who would be harmed by treatment
     harmed <- max(cer-ier, 0)
 
-    list(healthy=healthy, helped=helped, harmed=harmed, lost=lost)
+    result <- list(happy=happy, helped=helped, harmed=harmed, sad=sad)
+    class(result) <- "personograph.uplift"
+    result
 }
 
 ## Plotting code
@@ -111,6 +119,24 @@ round.with.warn <- function(x, f=round, name=NULL) {
     rounded
 }
 
+#' Plots a personograph
+#'
+#' Plots a personogram from a list with with percentages.
+#' A personograph is a graphical represenation of relative benefit or harm, using a grid of icons with different colors.
+#' Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to Treat visualization).
+#' Although these could be seen as Marshall-Kuiper plots.
+#'
+#' @export
+#' @param data A list of names to percentages (from 0 to 1)
+#' @param icon A \code{grImport} \code{Picture} for the icon used
+#' @param n.icons Number of icons to draw, defaults to 100
+#' @param dimension A vector of c(rows, columns) for the dimensions of the grid
+#' @param dimension A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied
+#' @param ask If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.
+#' @return None.
+#' @examples
+#' data <- list(happy= 0.8884758, helped = 0.04784283, harmed = 0, sad = 0.06368133)
+#' personograph(data)
 personograph <- function(data,
                 icon=NULL,
                 n.icons=100,
@@ -173,4 +199,10 @@ personograph <- function(data,
     grid.draw(do.call(gList, grobs))
     popViewport()
     dev.flush()
+}
+
+#' @export
+#' @seealso \code{\link{personograph}}
+plot.personograph.uplift <- function(x, ...) {
+    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", sad="azure4", happy="azure3"), ...)
 }

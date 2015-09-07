@@ -26,4 +26,6 @@ if (requireNamespace("meta", quietly = TRUE)) {
 ier <- calc.ier(cer, point)
 d <- uplift(ier, cer, F)
 
-personograph(d, colors=list(harmed="firebrick3", helped="olivedrab3", lost="azure4", healthy="azure3"))
+png(width=400, height=600)
+personograph(d, colors=list(harmed="firebrick3", helped="olivedrab3", sad="azure4", happy="azure3"))
+dev.off()
