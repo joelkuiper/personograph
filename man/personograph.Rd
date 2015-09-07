@@ -4,31 +4,40 @@
 \alias{personograph}
 \title{Plots a personograph}
 \usage{
-personograph(data, icon = NULL, n.icons = 100,
+personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
+  icon = NULL, n.icons = 100, plot.width = 0.6,
   dimension = ceiling(sqrt(c(n.icons, n.icons))), colors = as.colors(data),
   ask = dev.interactive(orNone = TRUE), ...)
 }
 \arguments{
 \item{data}{A list of names to percentages (from 0 to 1)}
 
+\item{fig.title}{Figure title}
+
+\item{fig.cap}{Figure caption}
+
+\item{draw.legend}{Logical indicating whether to draw the legend}
+
 \item{icon}{A \code{grImport} \code{Picture} for the icon used}
 
 \item{n.icons}{Number of icons to draw, defaults to 100}
 
+\item{plot.width}{The percentage of width that the main plotting area should take (with respect to the frame)}
+
 \item{dimension}{A vector of c(rows, columns) for the dimensions of the grid}
 
-\item{ask}{If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.}
+\item{colors}{A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied}
 
-\item{dimension}{A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied}
+\item{ask}{If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.}
 }
 \value{
 None.
 }
 \description{
-Plots a personogram from a list with with percentages.
+Plots a personograph from a list with with percentages.
 A personograph is a graphical represenation of relative benefit or harm, using a grid of icons with different colors.
 Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to Treat visualization).
-Although these could be seen as Marshall-Kuiper plots.
+Although these could be seen as Kuiper-Marshall plots.
 }
 \examples{
 data <- list(happy= 0.8884758, helped = 0.04784283, harmed = 0, sad = 0.06368133)

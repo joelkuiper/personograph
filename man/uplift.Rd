@@ -11,7 +11,7 @@ uplift(ier, cer, higher_is_better = NULL)
 
 \item{cer}{Control Event Rates}
 
-\item{higher_is_better}{bool indicating the direction of the outcome measure, default TRUE}
+\item{higher_is_better}{logical indicating the direction of the outcome measure, default TRUE}
 }
 \value{
 A list of S3 class \code{personograph.uplift} with the following elements:
