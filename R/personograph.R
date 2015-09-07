@@ -228,28 +228,27 @@ personograph <- function(data,
             }
         }
     }
-
-    grid.draw(do.call(grobTree, grobs))
+    plotGrobs <- do.call(grobTree, grobs)
+    grid.draw(plotGrobs)
     popViewport()
 
-    font <- gpar(fontsize=12, col="azure4", fontfamily="Helvetica")
+    font <- gpar(fontsize=12, fontfamily="Helvetica")
 
     if(draw.legend) {
         seekViewport("legend")
         legend.cols <- length(n)
         pushViewport(viewport(
+            x      = 0.55,
             width  = unit(0.8, "npc"),
-            x = 0.55,
-            just = "center",
             layout = grid.layout(ncol=legend.cols * 2,
                                  nrow=1,
-                                 respect=T,
                                  heights=unit(0.25, "npc"))))
 
         idx <- 0
+
         for(name in n)  {
             idx <- idx + 1
-            pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx, width=unit(0.1, "npc")))
+            pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
             grid.circle(x=0, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
             idx <- idx + 1
@@ -258,7 +257,7 @@ personograph <- function(data,
             popViewport()
         }
 
-        popViewport()
+        popViewport(2)
     }
 
     if(!is.null(fig.cap)) {
@@ -273,5 +272,5 @@ personograph <- function(data,
 #' @export
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
+    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure2"), ...)
 }
