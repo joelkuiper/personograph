@@ -49,6 +49,23 @@ calc.ier <- function(cer, point, units=sm) {
     }
 }
 
+#' "Uplift" from IER and CER
+#'
+#' Calculates the percentage [0,1] of people helped, harmed, lost and healty
+#' from the Intervention Event Rates (IER) and Control Event Rates (CER).
+#' Note that the result depends on the direction of the outcome measure,
+#' e.g. higher_is_better = T (default) for treatment efficacy, higher_is_better = F for
+#' adverse events.
+#'
+#' @export
+#' @param ier Intervention Event Rates
+#' @param cer Control Event Rates
+#' @param higher_is_better bool indicating the direction of the outcome measure
+#' @return A list with the following elements
+#' healthy, people who are happy no matter what treatment
+#' lost, people who are sad no matter what treatment
+#' helped, people who would be helped by treatment
+#' harmed, people who would be harmed by treatment
 uplift <- function(ier, cer, higher_is_better=NULL) {
     if(is.null(higher_is_better)) {
         higher_is_better <- T
@@ -69,13 +86,13 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     ## [lost] people who are sad no matter what treatment
     lost <- 1-max(ier, cer)
 
-    ## [treated] people who would be saved by treatment
-    treated <- max(ier-cer, 0)
+    ## [helped] people who would be saved by treatment
+    helped <- max(ier-cer, 0)
 
     ## [harmed] people who would be harmed by treatment
     harmed <- max(cer-ier, 0)
 
-    list(healthy=healthy, treated=treated, harmed=harmed, lost=lost)
+    list(healthy=healthy, helped=helped, harmed=harmed, lost=lost)
 }
 
 ## Plotting code
