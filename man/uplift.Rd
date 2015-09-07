@@ -16,14 +16,14 @@ uplift(ier, cer, higher_is_better = NULL)
 \value{
 A list of S3 class \code{personograph.uplift} with the following elements:
 \itemize{
-\item{happy}{people who are happy no matter what treatment}
-\item{sad}{people who are sad no matter what treatment}
+\item{good}{people who are good no matter what treatment}
+\item{bad}{people who are bad no matter what treatment}
 \item{helped}{people who would be helped by treatment}
 \item{harmed}{people who would be harmed by treatment}
 }
 }
 \description{
-Calculates the percentage (from 0 to 1) of people helped, harmed, sad, and happy
+Calculates the percentage (from 0 to 1) of people helped, harmed, bad, and good
 from the Intervention Event Rates (IER) and Control Event Rates (CER).
 Note that the result depends on the direction of the outcome measure,
 e.g. higher_is_better = T (default) for treatment efficacy, higher_is_better = F for

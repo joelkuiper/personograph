@@ -14,6 +14,3 @@ Imports:
   grDevices
 Suggests:
   meta
-Collate:
-  'personograph.R'
-  'meta.personograph.R'

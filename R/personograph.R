@@ -37,15 +37,15 @@ w.approx.cer <- function(ev.ctrl, n.ctrl) {
 #' @seealso \code{\link{w.approx.cer}}
 #' @param cer Absolute risk with control (calculated; from 0 to 1)
 #' @param point Relative risk with intervention (direct from meta-analysis)
-#' @param units The outcome measure, RR or OR as string
+#' @param sm The outcome measure, RR or OR as string
 #' @return Absolute risk with intervention as Intervention Event Rates (IER)
-calc.ier <- function(cer, point, units=sm) {
-    if (units == "RR") {
+calc.ier <- function(cer, point, sm) {
+    if (sm == "RR") {
         return(cer * point)
-    } else if(units == "OR") {
+    } else if(sm == "OR") {
         return(cer * (point / (1 - (cer * (1 - point)))))
     } else {
-        stop("Units need to be OR (Odds Ratios) or RR (Relative Risk)")
+        stop("Sm need to be OR (Odds Ratios) or RR (Relative Risk)")
     }
 }
 

@@ -4,14 +4,14 @@
 \alias{calc.ier}
 \title{Calculate the IER (Intervention Event Rates)}
 \usage{
-calc.ier(cer, point, units = sm)
+calc.ier(cer, point, sm)
 }
 \arguments{
 \item{cer}{Absolute risk with control (calculated; from 0 to 1)}
 
 \item{point}{Relative risk with intervention (direct from meta-analysis)}
 
-\item{units}{The outcome measure, RR or OR as string}
+\item{sm}{The outcome measure, RR or OR as string}
 }
 \value{
 Absolute risk with intervention as Intervention Event Rates (IER)

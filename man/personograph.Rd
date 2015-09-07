@@ -26,7 +26,7 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{dimension}{A vector of c(rows, columns) for the dimensions of the grid}
 
-\item{colors}{A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied}
+\item{colors}{A vector of names to colors, must match the names in data. Uses the "gray.colors" style if none supplied}
 
 \item{ask}{If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.}
 }
@@ -40,7 +40,7 @@ Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to 
 Although these could be seen as Kuiper-Marshall plots.
 }
 \examples{
-data <- list(happy= 0.8884758, helped = 0.04784283, harmed = 0, sad = 0.06368133)
+data <- list(good= 0.8884758, helped = 0.04784283, harmed = 0, bad = 0.06368133)
 personograph(data)
 }
 
