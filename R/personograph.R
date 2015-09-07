@@ -127,7 +127,8 @@ round.with.warn <- function(x, f=round, name=NULL) {
 #'
 #' @export
 #' @param data A list of names to percentages (from 0 to 1)
-#' @param icon A \code{grImport} \code{Picture} for the icon used
+#' @param icon.style A numeric from 1-11 which of the included icons to use
+#' @param icon A \code{grImport} \code{Picture} for the icon used, overwrites \code{icon.style}
 #' @param n.icons Number of icons to draw, defaults to 100
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
 #' @param dimension A vector of c(rows, columns) for the dimensions of the grid
@@ -145,6 +146,7 @@ personograph <- function(data,
                  fig.cap=NULL,
                  draw.legend=T,
                  icon=NULL,
+                 icon.style=1,
                  n.icons=100,
                  plot.width=0.6,
                  dimension=ceiling(sqrt(c(n.icons, n.icons))),
@@ -155,12 +157,12 @@ personograph <- function(data,
     devAskNewPage(ask)
 
     if(is.null(icon)) {
-        icon <- readPicture(system.file("icon.ps.xml", package="personograph"))
+        icon <- readPicture(system.file(paste0(icon.style, ".ps.xml"), package="personograph"))
     }
 
     master.rows <- sum(!is.null(fig.title), !is.null(draw.legend), !is.null(fig.cap))
     master.heights <- c(0.2,
-                       1.0 - (master.rows * 0.1),
+                       0.9 - (master.rows * 0.1),
                        ifelse(draw.legend, .1, 0),
                        ifelse(!is.null(fig.cap), .1, 0))
 
@@ -248,11 +250,11 @@ personograph <- function(data,
         for(name in n)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx, width=unit(0.1, "npc")))
-            grid.circle(x=0.1, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
+            grid.circle(x=0, r=0.5, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.text(x=-0.65, paste0(name, "=", formatC(data[[name]], digits=3, width=3)), gp=font, just="left")
+            grid.text(x=-0.8, paste(name, "=", formatC(data[[name]], digits=3, width=3)), gp=font, just="left")
             popViewport()
         }
 
@@ -264,6 +266,7 @@ personograph <- function(data,
         grid.text(fig.cap, gp = font)
     }
 
+    popViewport()
     dev.flush()
 }
 

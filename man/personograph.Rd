@@ -5,7 +5,7 @@
 \title{Plots a personograph}
 \usage{
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
-  icon = NULL, n.icons = 100, plot.width = 0.6,
+  icon = NULL, icon.style = 1, n.icons = 100, plot.width = 0.6,
   dimension = ceiling(sqrt(c(n.icons, n.icons))), colors = as.colors(data),
   ask = dev.interactive(orNone = TRUE), ...)
 }
@@ -18,7 +18,9 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{draw.legend}{Logical indicating whether to draw the legend}
 
-\item{icon}{A \code{grImport} \code{Picture} for the icon used}
+\item{icon}{A \code{grImport} \code{Picture} for the icon used, overwrites \code{icon.style}}
+
+\item{icon.style}{A numeric from 1-11 which of the included icons to use}
 
 \item{n.icons}{Number of icons to draw, defaults to 100}
 

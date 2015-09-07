@@ -27,4 +27,4 @@ if (requireNamespace("meta", quietly = TRUE)) {
 
 ier <- calc.ier(cer, point, sm)
 
-plot(uplift(ier, cer, T))
+plot(uplift(ier, cer, F), fig.cap="Caption", draw.legend=T, icon.style=2)
