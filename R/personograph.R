@@ -156,6 +156,8 @@ personograph <- function(data,
     plot.new()
     devAskNewPage(ask)
 
+    fontfamily <- c("Open Sans", "Helvatica", "Arial")
+
     if(is.null(icon)) {
         icon <- readPicture(system.file(paste0(icon.style, ".ps.xml"), package="personograph"))
     }
@@ -181,7 +183,8 @@ personograph <- function(data,
     if(!is.null(fig.title)) {
         seekViewport("title")
         grid.text(fig.title,
-                  gp = gpar(fontsize = 18, fontfamily="Helvetica", fontface="bold"))
+                  gp = gpar(fontsize = 18, fontfamily=fontfamily, fontface="bold"))
+        popViewport()
     }
 
     seekViewport("plot")
@@ -230,16 +233,16 @@ personograph <- function(data,
     }
     plotGrobs <- do.call(grobTree, grobs)
     grid.draw(plotGrobs)
-    popViewport()
+    popViewport(2)
 
-    font <- gpar(fontsize=12, fontfamily="Helvetica")
+    font <- gpar(fontsize=10, fontfamily)
 
     if(draw.legend) {
         seekViewport("legend")
         legend.cols <- length(n)
         pushViewport(viewport(
-            x      = 0.55,
             width  = unit(0.8, "npc"),
+            x      = unit(0.55, "npc"),
             layout = grid.layout(ncol=legend.cols * 2,
                                  nrow=1,
                                  heights=unit(0.25, "npc"))))
@@ -253,7 +256,7 @@ personograph <- function(data,
             popViewport()
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.text(x=-0.8, paste(name, "=", formatC(data[[name]], digits=3, width=3)), gp=font, just="left")
+            grid.text(x=unit(-0.8, "npc"), paste(name, "=", formatC(data[[name]], digits=2)), gp=font, just="left")
             popViewport()
         }
 
@@ -263,6 +266,7 @@ personograph <- function(data,
     if(!is.null(fig.cap)) {
         seekViewport("caption")
         grid.text(fig.cap, gp = font)
+        popViewport()
     }
 
     popViewport()
@@ -272,5 +276,5 @@ personograph <- function(data,
 #' @export
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure2"), ...)
+    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
 }
