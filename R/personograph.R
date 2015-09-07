@@ -235,7 +235,7 @@ personograph <- function(data,
     grid.draw(plotGrobs)
     popViewport(2)
 
-    font <- gpar(fontsize=10, fontfamily)
+    font <- gpar(fontsize=10, fontfamily, col="azure4")
 
     if(draw.legend) {
         seekViewport("legend")
