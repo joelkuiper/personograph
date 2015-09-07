@@ -27,4 +27,6 @@ if (requireNamespace("meta", quietly = TRUE)) {
 
 ier <- calc.ier(cer, point, sm)
 
-plot(uplift(ier, cer, F), fig.cap="Caption", draw.legend=T, icon.style=2)
+png("~/Desktop/foo.png", width=800, height=1000)
+plot(uplift(ier, cer, F), fig.title="Example", fig.cap="Example from rMeta", draw.legend=T, icon.style=2)
+dev.off()

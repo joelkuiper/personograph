@@ -232,7 +232,7 @@ personograph <- function(data,
     grid.draw(do.call(grobTree, grobs))
     popViewport()
 
-    font <- gpar(fontsize=10, col="azure4", fontfamily="Helvetica")
+    font <- gpar(fontsize=12, col="azure4", fontfamily="Helvetica")
 
     if(draw.legend) {
         seekViewport("legend")
@@ -250,7 +250,7 @@ personograph <- function(data,
         for(name in n)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx, width=unit(0.1, "npc")))
-            grid.circle(x=0, r=0.5, gp=gpar(fill=colors[[name]], col=NA))
+            grid.circle(x=0, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
