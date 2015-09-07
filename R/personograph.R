@@ -104,7 +104,7 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
 }
 
 ## Plotting code
-as.colors <- function(lst, palette=rainbow) {
+as.colors <- function(lst, palette=gray.colors) {
     n <- names(lst)
     colors <- palette(length(n))
     sapply(n, function(name) { colors[[which(n == name)]]}, simplify = FALSE, USE.NAMES = TRUE)
@@ -131,7 +131,7 @@ round.with.warn <- function(x, f=round, name=NULL) {
 #' @param n.icons Number of icons to draw, defaults to 100
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
 #' @param dimension A vector of c(rows, columns) for the dimensions of the grid
-#' @param colors A vector of names to colors, must match the names in data. Uses the "rainbow" style if none supplied
+#' @param colors A vector of names to colors, must match the names in data. Uses the "gray.colors" style if none supplied
 #' @param ask If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.
 #' @param fig.cap Figure caption
 #' @param fig.title Figure title
@@ -179,7 +179,7 @@ personograph <- function(data,
     if(!is.null(fig.title)) {
         seekViewport("title")
         grid.text(fig.title,
-                  gp = gpar(fontsize = 16, fontfamily="Helvetica", fontface="bold"))
+                  gp = gpar(fontsize = 18, fontfamily="Helvetica", fontface="bold"))
     }
 
     seekViewport("plot")
@@ -262,7 +262,7 @@ personograph <- function(data,
     if(!is.null(fig.cap)) {
         seekViewport("caption")
         grid.text(fig.cap,
-                  gp = gpar(fontsize = 10, fontfamily="Helvetica", col="azure4"))
+                  gp = gpar(fontsize = 11, fontfamily="Helvetica", col="azure4"))
     }
 
     dev.flush()
