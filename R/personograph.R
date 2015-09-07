@@ -51,7 +51,7 @@ calc.ier <- function(cer, point, units=sm) {
 
 #' "Uplift" from IER and CER
 #'
-#' Calculates the percentage (from 0 to 1) of people helped, harmed, sad, and happy
+#' Calculates the percentage (from 0 to 1) of people helped, harmed, bad, and good
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
 #' e.g. higher_is_better = T (default) for treatment efficacy, higher_is_better = F for
@@ -66,8 +66,8 @@ calc.ier <- function(cer, point, units=sm) {
 #' @param higher_is_better logical indicating the direction of the outcome measure, default TRUE
 #' @return A list of S3 class \code{personograph.uplift} with the following elements:
 #' \itemize{
-#' \item{happy}{people who are happy no matter what treatment}
-#' \item{sad}{people who are sad no matter what treatment}
+#' \item{good}{people who are good no matter what treatment}
+#' \item{bad}{people who are bad no matter what treatment}
 #' \item{helped}{people who would be helped by treatment}
 #' \item{harmed}{people who would be harmed by treatment}
 #' }
@@ -81,16 +81,16 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
         warning("Setting higher_is_better as outcome direction to TRUE")
     }
     if (higher_is_better == F) {
-        ## Always orient the numbers so that higher events represents a happy outcome
+        ## Always orient the numbers so that higher events represents a good outcome
         ier <- 1 - ier
         cer <- 1 - cer
     }
 
-    ## [happy] people who are happy no matter what treatment
-    happy <- min(ier, cer)
+    ## [good] people who are good no matter what treatment
+    good <- min(ier, cer)
 
-    ## [sad] people who are sad no matter what treatment
-    sad <- 1-max(ier, cer)
+    ## [bad] people who are bad no matter what treatment
+    bad <- 1-max(ier, cer)
 
     ## [helped] people who would be saved by treatment
     helped <- max(ier-cer, 0)
@@ -98,7 +98,7 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     ## [harmed] people who would be harmed by treatment
     harmed <- max(cer-ier, 0)
 
-    result <- list(happy=happy, helped=helped, harmed=harmed, sad=sad)
+    result <- list(good=good, helped=helped, harmed=harmed, bad=bad)
     class(result) <- "personograph.uplift"
     result
 }
@@ -138,7 +138,7 @@ round.with.warn <- function(x, f=round, name=NULL) {
 #' @param draw.legend Logical indicating whether to draw the legend
 #' @return None.
 #' @examples
-#' data <- list(happy= 0.8884758, helped = 0.04784283, harmed = 0, sad = 0.06368133)
+#' data <- list(good= 0.8884758, helped = 0.04784283, harmed = 0, bad = 0.06368133)
 #' personograph(data)
 personograph <- function(data,
                  fig.title=NULL,
@@ -248,11 +248,11 @@ personograph <- function(data,
         for(name in n)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx, width=unit(0.1, "npc")))
-            grid.circle(x=0.1, r=0.5, gp=gpar(fill=colors[[name]], col=NA))
+            grid.circle(x=0.1, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.text(x=-0.65, paste(name, "=", formatC(data[[name]], digits=3, width=3)), gp=font, just="left")
+            grid.text(x=-0.65, paste0(name, "=", formatC(data[[name]], digits=3, width=3)), gp=font, just="left")
             popViewport()
         }
 
@@ -271,5 +271,5 @@ personograph <- function(data,
 #' @export
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", sad="azure4", happy="azure3"), ...)
+    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
 }
