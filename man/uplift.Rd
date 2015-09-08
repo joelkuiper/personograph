@@ -16,10 +16,10 @@ uplift(ier, cer, higher_is_better = NULL)
 \value{
 A list of S3 class \code{personograph.uplift} with the following elements:
 \itemize{
-\item{good}{people who are good no matter}
-\item{bad}{people who are bad no matter}
-\item{helped} {people who are helped by treatment}
-\item{harmed}{people who are harmed by treatment}
+\item{\code{good}} {people who are good no matter}
+\item{\code{bad}} {people who are bad no matter}
+\item{\code{helped}} {people who are helped by treatment}
+\item{\code{harmed}} {people who are harmed by treatment}
 }
 }
 \description{

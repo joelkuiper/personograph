@@ -69,7 +69,6 @@
 NULL
 
 
-## Util
 w.median <- function(x, w) {
     ## Lifted from cwhmisc, http://www.inside-r.org/packages/cran/cwhmisc/docs/w.median
     if (missing(w)) w <- rep(1,length(x))
@@ -137,10 +136,10 @@ calc.ier <- function(cer, point, sm) {
 #' @param higher_is_better logical indicating the direction of the outcome measure, default TRUE
 #' @return A list of S3 class \code{personograph.uplift} with the following elements:
 #' \itemize{
-#' \item{good}{people who are good no matter}
-#' \item{bad}{people who are bad no matter}
-#' \item{helped} {people who are helped by treatment}
-#' \item{harmed}{people who are harmed by treatment}
+#' \item{\code{good}} {people who are good no matter}
+#' \item{\code{bad}} {people who are bad no matter}
+#' \item{\code{helped}} {people who are helped by treatment}
+#' \item{\code{harmed}} {people who are harmed by treatment}
 #' }
 #' @examples
 #' ier <- 0.06368133
@@ -181,7 +180,7 @@ as.colors <- function(lst, palette=gray.colors) {
     sapply(n, function(name) { colors[[which(n == name)]]}, simplify = FALSE, USE.NAMES = TRUE)
 }
 
-round.with.warn <- function(x, f=round, name=NULL) {
+round.with.warn <- function(x, f=ceiling, name=NULL) {
     rounded <- f(x)
     if(x > 0 && rounded == 0) {
         warning(paste("truncating", ifelse(is.null(name), "a", name), "non-zero value of", x, "to 0"))
@@ -191,7 +190,7 @@ round.with.warn <- function(x, f=round, name=NULL) {
 
 #' Plots a personograph
 #'
-#' Plots a personograph from a list with with percentages.
+#' Plots a personograph from a list with with percentages (must sum to 1).
 #' A personograph is a graphical represenation of relative benefit or harm, using a grid of icons with different colors.
 #' Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to Treat visualization).
 #' Although these could be seen as Kuiper-Marshall plots.
@@ -272,14 +271,11 @@ plot.personograph <- function(data,
         x <- data[[which(n == name)]]
         round.with.warn(x * n.icons, name=name)}, simplify = FALSE, USE.NAMES = TRUE)
 
-
-    ordered_names <- names(counts)
-
     if(is.null(colors)) {
         colors <- as.colors(data)
     }
 
-    flat <- unlist(lapply(ordered_names, function(name) { rep(name, counts[[name]])}))
+    flat <- unlist(lapply(n, function(name) { rep(name, counts[[name]])}))
 
     row_height <- icon.height
     total <- 0
