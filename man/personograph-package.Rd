@@ -16,8 +16,10 @@ treatment.
 This terminology is similar to that of Uplift Modelling.
 }
 \details{
-The plot function \code{\link{personograph}} is implemented in such a way that it's easy to just pass
-a named list of percentages, colors, and an icon. Making it potentially useful for other use cases as well.
+The plot function \code{\link{personograph}} is implemented in such
+a way that it's easy to just pass a named list of percentages,
+colors, and an icon. Making it potentially useful for other use
+cases as well.
 
 \if{html}{
 The example code will generate the following graph if \code{higher_is_better=F}:

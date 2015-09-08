@@ -36,9 +36,11 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 None.
 }
 \description{
-Plots a personograph from a list with with percentages (must sum to 1).
-A personograph is a graphical represenation of relative benefit or harm, using a grid of icons with different colors.
-Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to Treat visualization).
+Plots a personograph from a list with with percentages (must sum to
+1). A personograph is a graphical represenation of relative benefit
+or harm, using a grid of icons with different colors. Its intended
+use is similar to that of Cates Plots (Visual Rx, Number Needed to
+Treat visualization).
 Although these could be seen as Kuiper-Marshall plots.
 }
 \examples{
