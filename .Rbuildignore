@@ -5,4 +5,5 @@
 ^Rtmp.*$
 ^.Rapp.history$
 ^Rplot.*$
-^.git.*$
+^\.git.*$
+^Rd2pdf.*$
