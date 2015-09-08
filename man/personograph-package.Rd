@@ -10,23 +10,23 @@ representation of relative harm and benefit from a treatment. It
 similar to
 \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 Plots)}. Each icon on the grid is colored to indicate whether that
-percentage of people is harmed by the treatment, helped by the the
+percentage of people is harmed by the treatment, helped by the
 treatment, healthy regardless of treatment, or ill regardless of
 treatment.
-This terminology used is similar to that of Uplift Modelling.
+This terminology is similar to that of Uplift Modelling.
 }
 \details{
 The plot function \code{\link{plot.personograph}} is implemented in such a way that it's easy to just pass
 a named list of percentages, colors, and an icon. Making it potentially useful for other use cases as well.
 
 \if{html}{
-The example code will generate the following graph if higher_is_better=F:
+The example code will generate the following graph if \code{higher_is_better=F}:
 
 \figure{green.png}{}
 
 }
 \if{latex}{
-The example code will generate the following graph if higher_is_better=F:
+The example code will generate the following graph if \code{higher_is_better=F}:
 
 \figure{green.pdf}{options: width=4in}
 

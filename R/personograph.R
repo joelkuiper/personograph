@@ -15,13 +15,13 @@
 #'
 #'
 #' \if{html}{
-#' The example code will generate the following graph if higher_is_better=F:
+#' The example code will generate the following graph if \code{higher_is_better=F}:
 #'
 #' \figure{green.png}{}
 #'
 #' }
 #' \if{latex}{
-#' The example code will generate the following graph if higher_is_better=F:
+#' The example code will generate the following graph if \code{higher_is_better=F}:
 #'
 #' \figure{green.pdf}{options: width=4in}
 #'
