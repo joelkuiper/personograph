@@ -1,0 +1,8 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^.DS_Store$
+^plots.pdf$
+^Rtmp.*$
+^.Rapp.history$
+^Rplot.*$
+^.git.*$
