@@ -366,5 +366,5 @@ personograph <- function(data,
 #' @method plot personograph.uplift
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
+    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure2"), ...)
 }
