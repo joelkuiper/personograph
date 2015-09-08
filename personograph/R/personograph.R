@@ -27,7 +27,7 @@
 #' \figure{green.pdf}{options: width=5in}
 #' }
 #'
-#' \subsection{Funding & Acknowledgements}{
+#' \subsection{Funding & Acknowledgments}{
 #' This software was commissioned and sponsored by \href{http://www.doctorevidence.com/}{Doctor Evidence}.
 #' The Doctor Evidence mission is to improve clinical outcomes by
 #' finding and delivering medical evidence to healthcare
