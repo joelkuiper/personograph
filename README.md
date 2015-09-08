@@ -5,5 +5,7 @@
 
 ## Development
 Install `devtools` and `roxygen2`.
-To generate documentation run `document()` in the package folder.
-To convert the documentation use `R CMD Rd2pdf <package>`.
+To generate documentation run `document()` in the package folder after loading `devtools` with `library(devtools)`.
+The documentation is automatically generated from the comments in the source code.
+See the [Roxygen documentation](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html) for details.
+To convert the documentation to PDF use `R CMD Rd2pdf <package>`.
