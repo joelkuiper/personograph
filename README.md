@@ -1,7 +1,7 @@
 # Personograph
 
-![higher_is_better=F](/man/figures/green.png?raw=true)
-![higher_is_better=T](/man/figures/red.png?raw=true)
+![higher_is_better=F](/personograph/man/figures/green.png?raw=true)
+![higher_is_better=T](/personograph/man/figures/red.png?raw=true)
 
 ## Development
 Install `devtools` and `roxygen2`.
