@@ -200,6 +200,15 @@ round.with.warn <- function(x, f=ceiling, name=NULL) {
     rounded
 }
 
+naturalfreq <- function(ar, denominator=100) {
+    numerator <- ar * denominator
+    if(numerator > 0 && numerator <0.5) {
+        return(paste("<1 in", denominator))
+    } else {
+        return(paste(round(numerator), "in", denominator))
+    }
+}
+
 #' Plots a personograph
 #'
 #' Plots a personograph from a list with with percentages (must sum to
@@ -345,7 +354,7 @@ personograph <- function(data,
             popViewport()
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.text(x=unit(-0.8, "npc"), paste(name, "=", formatC(data[[name]], digits=2)), gp=font, just="left")
+            grid.text(x=unit(-0.8, "npc"), paste(naturalfreq(data[[name]], denominator=n.icons), name), gp=font, just="left")
             popViewport()
         }
 
