@@ -66,8 +66,8 @@ ier <- calc.ier(cer, point, sm)
 # Calcaulte the "uplift" statistics
 # Note that this depends on the direction of the outcome effect (higher_is_better)
 
-u <- uplift(ier, cer, higher_is_better=F)
-plot(u, fig.title="Example", fig.cap="Example from rMeta", draw.legend=T)
+u <- uplift(ier, cer, higher_is_better=FALSE)
+plot(u, fig.title="Example", fig.cap="Example from rMeta")
 }
 \seealso{
 \code{\link{personograph}}

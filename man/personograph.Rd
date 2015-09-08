@@ -7,7 +7,7 @@
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
   icon = NULL, icon.style = 1, n.icons = 100, plot.width = 0.6,
   dimension = ceiling(sqrt(c(n.icons, n.icons))), colors = as.colors(data),
-  ask = dev.interactive(orNone = TRUE), ...)
+  ask = dev.interactive(orNone = TRUE))
 }
 \arguments{
 \item{data}{A list of names to percentages (from 0 to 1)}

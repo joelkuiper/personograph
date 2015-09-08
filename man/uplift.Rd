@@ -36,6 +36,6 @@ The adopted terminology is similar to that of Uplift modelling
 \examples{
 ier <- 0.06368133
 cer <- 0.1115242
-uplift(ier, cer, T)
+uplift(ier, cer, higher_is_better=TRUE)
 }
 

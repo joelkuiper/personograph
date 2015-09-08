@@ -31,6 +31,8 @@
 #' @name personograph-package
 #' @seealso \code{\link{personograph}}
 #' @seealso \code{\link{uplift}}
+#' @import grid
+#' @import grImport
 #' @examples
 #' # Example data from rMeta
 #' data <- read.table(textConnection('
@@ -65,8 +67,8 @@
 #' # Calcaulte the "uplift" statistics
 #' # Note that this depends on the direction of the outcome effect (higher_is_better)
 #'
-#' u <- uplift(ier, cer, higher_is_better=F)
-#' plot(u, fig.title="Example", fig.cap="Example from rMeta", draw.legend=T)
+#' u <- uplift(ier, cer, higher_is_better=FALSE)
+#' plot(u, fig.title="Example", fig.cap="Example from rMeta")
 NULL
 
 
@@ -145,7 +147,7 @@ calc.ier <- function(cer, point, sm) {
 #' @examples
 #' ier <- 0.06368133
 #' cer <- 0.1115242
-#' uplift(ier, cer, T)
+#' uplift(ier, cer, higher_is_better=TRUE)
 uplift <- function(ier, cer, higher_is_better=NULL) {
     if(is.null(higher_is_better)) {
         higher_is_better <- T
@@ -222,7 +224,7 @@ personograph <- function(data,
                  plot.width=0.6,
                  dimension=ceiling(sqrt(c(n.icons, n.icons))),
                  colors=as.colors(data),
-                 ask=dev.interactive(orNone=TRUE), ...) {
+                 ask=dev.interactive(orNone=TRUE)) {
     devAskNewPage(FALSE)
     plot.new()
     devAskNewPage(ask)
