@@ -29,8 +29,16 @@ The example code will generate the following graph if \code{higher_is_better=F}:
 The example code will generate the following graph if \code{higher_is_better=F}:
 
 \figure{green.pdf}{options: width=4in}
-
 }
+
+\subsection{Funding & Acknowledgements}{
+This software was commissioned and sponsored by \href{http://www.doctorevidence.com/}{Doctor Evidence}.
+The Doctor Evidence mission is to improve clinical outcomes by
+finding and delivering medical evidence to healthcare
+professionals, medical associations, policy makers and
+manufacturers through revolutionary solutions that enable anyone to
+make informed decisions and policies using medical data that is
+more accessible, relevant and readable.}
 }
 \examples{
 # Example data from rMeta

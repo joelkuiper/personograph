@@ -9,3 +9,7 @@ To generate documentation run `document()` in the package folder after loading `
 The documentation is automatically generated from the comments in the source code.
 See the [Roxygen documentation](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html) for details.
 To convert the documentation to PDF use `R CMD Rd2pdf <package>`.
+
+## Funding & Acknowledgments
+This software was commissioned and sponsored by [Doctor Evidence](http://www.doctorevidence.com/).
+The Doctor Evidence mission is to improve clinical outcomes by finding and delivering medical evidence to healthcare professionals, medical associations, policy makers and manufacturers through revolutionary solutions that enable anyone to make informed decisions and policies using medical data that is more accessible, relevant and readable.
