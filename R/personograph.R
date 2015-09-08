@@ -1,3 +1,74 @@
+#' Generate personograph plots from data
+#'
+#' A personograph (Kuiper-Marshall plot) is a pictographic
+#' representation of relative harm and benefit from a treatment. It
+#' similar to
+#' \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
+#' Plots)}. Each icon on the grid is colored to indicate whether that
+#' percentage of people is harmed by the treatment, helped by the
+#' treatment, healthy regardless of treatment, or ill regardless of
+#' treatment.
+#' This terminology is similar to that of Uplift Modelling.
+#'
+#' The plot function \code{\link{plot.personograph}} is implemented in such a way that it's easy to just pass
+#' a named list of percentages, colors, and an icon. Making it potentially useful for other use cases as well.
+#'
+#'
+#' \if{html}{
+#' The example code will generate the following graph if higher_is_better=F:
+#'
+#' \figure{green.png}{}
+#'
+#' }
+#' \if{latex}{
+#' The example code will generate the following graph if higher_is_better=F:
+#'
+#' \figure{green.pdf}{options: width=4in}
+#'
+#' }
+#'
+#' @docType package
+#' @name personograph-package
+#'
+#' @examples
+#' # Example data from rMeta
+#' data <- read.table(textConnection('
+#'           name ev.trt n.trt ev.ctrl n.ctrl
+#' 1     Auckland     36   532      60    538
+#' 2        Block      1    69       5     61
+#' 3        Doran      4    81      11     63
+#' 4        Gamsu     14   131      20    137
+#' 5     Morrison      3    67       7     59
+#' 6 Papageorgiou      1    71       7     75
+#' 7      Tauesch      8    56      10     71
+#' '
+#' ), header=TRUE)
+#'
+#' sm <- "RR" # The outcome measure (either Relative Risk or Odds Ratio)
+#' if (requireNamespace("meta", quietly = TRUE)) { # use meta if available
+#'     ## Calculate the pooled OR or RR point estimate
+#'     m <- with(data,
+#'            meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
+#'     point <- exp(m$TE.random) # meta returns outcomes on the log scale
+#' } else {
+#'     # Calculated Random Effects RR, using the meta package
+#'     point <- 0.5710092
+#' }
+#'
+#' # Approximate the Control Event Rates using a weighed median
+#' cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
+#
+#' # Calculate the Intervention Event Rates (IER) from the CER and point estimate
+#' ier <- calc.ier(cer, point, sm)
+#'
+#' # Calcaulte the "uplift" statistics
+#' # Note that this depends on the direction of the outcome effect (higher_is_better)
+#'
+#' u <- uplift(ier, cer, higher_is_better=F)
+#' plot(u, fig.title="Example", fig.cap="Example from rMeta", draw.legend=T)
+NULL
+
+
 ## Util
 w.median <- function(x, w) {
     ## Lifted from cwhmisc, http://www.inside-r.org/packages/cran/cwhmisc/docs/w.median
@@ -54,11 +125,11 @@ calc.ier <- function(cer, point, sm) {
 #' Calculates the percentage (from 0 to 1) of people helped, harmed, bad, and good
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
-#' e.g. higher_is_better = T (default) for treatment efficacy, higher_is_better = F for
+#' e.g. \code{higher_is_better = T} (default) for treatment efficacy, \code{higher_is_better = F} for
 #' adverse events.
 #'
 #' The adopted terminology is similar to that of Uplift modelling
-#' https://en.wikipedia.org/wiki/Uplift_modelling
+#' \url{https://en.wikipedia.org/wiki/Uplift_modelling}
 #'
 #' @export
 #' @param ier Intervention Event Rates
@@ -66,10 +137,10 @@ calc.ier <- function(cer, point, sm) {
 #' @param higher_is_better logical indicating the direction of the outcome measure, default TRUE
 #' @return A list of S3 class \code{personograph.uplift} with the following elements:
 #' \itemize{
-#' \item{good}{people who are good no matter what treatment}
-#' \item{bad}{people who are bad no matter what treatment}
-#' \item{helped}{people who would be helped by treatment}
-#' \item{harmed}{people who would be harmed by treatment}
+#' \item{good}{people who are good no matter}
+#' \item{bad}{people who are bad no matter}
+#' \item{helped} {people who are helped by treatment}
+#' \item{harmed}{people who are harmed by treatment}
 #' }
 #' @examples
 #' ier <- 0.06368133
@@ -140,8 +211,8 @@ round.with.warn <- function(x, f=round, name=NULL) {
 #' @return None.
 #' @examples
 #' data <- list(good= 0.8884758, helped = 0.04784283, harmed = 0, bad = 0.06368133)
-#' personograph(data)
-personograph <- function(data,
+#' plot.personograph(data)
+plot.personograph <- function(data,
                  fig.title=NULL,
                  fig.cap=NULL,
                  draw.legend=T,
@@ -156,7 +227,7 @@ personograph <- function(data,
     plot.new()
     devAskNewPage(ask)
 
-    fontfamily <- c("Open Sans", "Helvatica", "Arial")
+    fontfamily <- c("Helvetica", "Arial")
 
     if(is.null(icon)) {
         icon <- readPicture(system.file(paste0(icon.style, ".ps.xml"), package="personograph"))
@@ -235,7 +306,7 @@ personograph <- function(data,
     grid.draw(plotGrobs)
     popViewport(2)
 
-    font <- gpar(fontsize=10, fontfamily, col="azure4")
+    font <- gpar(fontsize=11, fontfamily)
 
     if(draw.legend) {
         seekViewport("legend")
@@ -245,6 +316,7 @@ personograph <- function(data,
             x      = unit(0.55, "npc"),
             layout = grid.layout(ncol=legend.cols * 2,
                                  nrow=1,
+                                 respect=T,
                                  heights=unit(0.25, "npc"))))
 
         idx <- 0
@@ -274,7 +346,7 @@ personograph <- function(data,
 }
 
 #' @export
-#' @seealso \code{\link{personograph}}
+#' @seealso \code{\link{plot.personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
+    plot.personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
 }

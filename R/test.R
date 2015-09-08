@@ -1,6 +1,4 @@
 library(grImport)
-
-## Demo
 data <- read.table(textConnection('
           name ev.trt n.trt ev.ctrl n.ctrl
 1     Auckland     36   532      60    538
@@ -17,14 +15,19 @@ cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
 
 sm <- "RR"
 if (requireNamespace("meta", quietly = TRUE)) {
-    ## Calculate the OR or RR, we use meta package here
-    m <- meta::metabin(data[, "ev.trt"], data[, "n.trt"], data[, "ev.ctrl"], data[, "n.ctrl"], sm=sm)
+    ## Calculate the pooled OR or RR point estimate, we use meta package here
+    m <- with(data,
+             meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
     point <- exp(m$TE.random) # meta returns outcomes on the log scale
 } else {
-    # Calculated Random Effects RR, using the meta package
+    ## Calculated Random Effects RR, using the meta package
     point <- 0.5710092
 }
 
 ier <- calc.ier(cer, point, sm)
 
-plot(uplift(ier, cer, F), fig.title="Example", fig.cap="Example from rMeta", draw.legend=T, icon.style=8)
+pdf("~/Desktop/test2.pdf", 8, 10)
+
+plot(uplift(ier, cer, F), fig.title="Example", fig.cap="Example from rMeta", draw.legend=T, icon.style=1)
+
+dev.off()
