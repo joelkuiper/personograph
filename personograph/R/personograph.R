@@ -25,7 +25,7 @@
 #' \if{latex}{
 #' The example code will generate the following graph if \code{higher_is_better=F}:
 #'
-#' \figure{green.pdf}{options: width=4in}
+#' \figure{green.pdf}{options: width=5in}
 #' }
 #'
 #' \subsection{Funding & Acknowledgements}{
@@ -154,10 +154,13 @@ calc.ier <- function(cer, point, sm) {
 #' \item{\code{helped}} {people who are helped by treatment}
 #' \item{\code{harmed}} {people who are harmed by treatment}
 #' }
+#'
+#' Can be plotted as a personograph with the S3 generic `plot`.
 #' @examples
 #' ier <- 0.06368133
 #' cer <- 0.1115242
-#' uplift(ier, cer, higher_is_better=TRUE)
+#' u <- uplift(ier, cer, higher_is_better=TRUE)
+#' plot(u)
 uplift <- function(ier, cer, higher_is_better=NULL) {
     if(is.null(higher_is_better)) {
         higher_is_better <- T
@@ -186,7 +189,6 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     result
 }
 
-## Plotting code
 as.colors <- function(lst, palette=gray.colors) {
     n <- names(lst)
     colors <- palette(length(n))
@@ -214,9 +216,10 @@ round.with.warn <- function(x, f=ceiling, name=NULL) {
 #' @param data A list of names to percentages (from 0 to 1)
 #' @param icon.style A numeric from 1-11 indicating which of the included icons to use
 #' @param icon A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}
+#' @param icon.dim The dimensions of icon as a vector c(width, height) of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied
 #' @param n.icons Number of icons to draw, defaults to 100
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
-#' @param dimension A vector of c(rows, columns) for the dimensions of the grid
+#' @param dimensions A vector of c(rows, columns) for the dimensions of the grid
 #' @param colors A vector of names to colors, must match the names in data. Uses the "gray.colors" style if none supplied
 #' @param ask If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.
 #' @param fig.cap Figure caption
@@ -231,10 +234,11 @@ personograph <- function(data,
                  fig.cap=NULL,
                  draw.legend=T,
                  icon=NULL,
+                 icon.dim=NULL,
                  icon.style=1,
                  n.icons=100,
                  plot.width=0.6,
-                 dimension=ceiling(sqrt(c(n.icons, n.icons))),
+                 dimensions=ceiling(sqrt(c(n.icons, n.icons))),
                  colors=as.colors(data),
                  ask=dev.interactive(orNone=TRUE)) {
     devAskNewPage(FALSE)
@@ -275,11 +279,16 @@ personograph <- function(data,
     seekViewport("plot")
     pushViewport(viewport(width=unit(plot.width, "npc")))
 
-    cols <- dimension[2]
-    rows <- dimension[1]
+    rows <- dimensions[1]
+    cols <- dimensions[2]
 
-    icon.height <- 1 / rows
-    icon.width <- 1 / cols
+    if(is.null(icon.dim)) {
+        icon.height <- 1 / rows
+        icon.width <- 1 / cols
+    } else {
+        icon.height <- icon.dim[1]
+        icon.width <- icon.dim[2]
+    }
 
     n <- names(data)
     counts <- sapply(n, function(name) {

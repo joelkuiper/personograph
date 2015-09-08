@@ -30,7 +30,7 @@ The example code will generate the following graph if \code{higher_is_better=F}:
 \if{latex}{
 The example code will generate the following graph if \code{higher_is_better=F}:
 
-\figure{green.pdf}{options: width=4in}
+\figure{green.pdf}{options: width=5in}
 }
 
 \subsection{Funding & Acknowledgements}{

@@ -5,9 +5,9 @@
 \title{Plots a personograph}
 \usage{
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
-  icon = NULL, icon.style = 1, n.icons = 100, plot.width = 0.6,
-  dimension = ceiling(sqrt(c(n.icons, n.icons))), colors = as.colors(data),
-  ask = dev.interactive(orNone = TRUE))
+  icon = NULL, icon.dim = NULL, icon.style = 1, n.icons = 100,
+  plot.width = 0.6, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
+  colors = as.colors(data), ask = dev.interactive(orNone = TRUE))
 }
 \arguments{
 \item{data}{A list of names to percentages (from 0 to 1)}
@@ -20,13 +20,15 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{icon}{A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}}
 
+\item{icon.dim}{The dimensions of icon as a vector c(width, height) of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied}
+
 \item{icon.style}{A numeric from 1-11 indicating which of the included icons to use}
 
 \item{n.icons}{Number of icons to draw, defaults to 100}
 
 \item{plot.width}{The percentage of width that the main plotting area should take (with respect to the frame)}
 
-\item{dimension}{A vector of c(rows, columns) for the dimensions of the grid}
+\item{dimensions}{A vector of c(rows, columns) for the dimensions of the grid}
 
 \item{colors}{A vector of names to colors, must match the names in data. Uses the "gray.colors" style if none supplied}
 

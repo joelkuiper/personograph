@@ -21,6 +21,8 @@ A list of S3 class \code{personograph.uplift} with the following elements:
 \item{\code{helped}} {people who are helped by treatment}
 \item{\code{harmed}} {people who are harmed by treatment}
 }
+
+Can be plotted as a personograph with the S3 generic `plot`.
 }
 \description{
 Calculates the percentage (from 0 to 1) of people helped, harmed, bad, and good
@@ -36,6 +38,7 @@ The adopted terminology is similar to that of Uplift modelling
 \examples{
 ier <- 0.06368133
 cer <- 0.1115242
-uplift(ier, cer, higher_is_better=TRUE)
+u <- uplift(ier, cer, higher_is_better=TRUE)
+plot(u)
 }
 
