@@ -192,7 +192,13 @@ as.colors <- function(lst, palette=gray.colors) {
     sapply(n, function(name) { colors[[which(n == name)]]}, simplify = FALSE, USE.NAMES = TRUE)
 }
 
-round.with.warn <- function(x, f=ceiling, name=NULL) {
+round.standard <- function(x) {
+    # rounds numbers conventionally
+    # so that round.standard(0.5)==1
+    return(floor(x+0.5))
+}
+
+round.with.warn <- function(x, f=round.standard, name=NULL) {
     rounded <- f(x)
     if(x > 0 && rounded == 0) {
         warning(paste("truncating", ifelse(is.null(name), "a", name), "non-zero value of", x, "to 0"))
@@ -205,7 +211,7 @@ naturalfreq <- function(ar, denominator=100) {
     if(numerator > 0 && numerator <0.5) {
         return(paste("<1 in", denominator))
     } else {
-        return(paste(round(numerator), "in", denominator))
+        return(paste(round.standard(numerator), "in", denominator))
     }
 }
 
