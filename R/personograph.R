@@ -10,7 +10,7 @@
 #' treatment.
 #' This terminology is similar to that of Uplift Modelling.
 #'
-#' The plot function \code{\link{plot.personograph}} is implemented in such a way that it's easy to just pass
+#' The plot function \code{\link{personograph}} is implemented in such a way that it's easy to just pass
 #' a named list of percentages, colors, and an icon. Making it potentially useful for other use cases as well.
 #'
 #'
@@ -29,7 +29,8 @@
 #'
 #' @docType package
 #' @name personograph-package
-#'
+#' @seealso \code{\link{personograph}}
+#' @seealso \code{\link{uplift}}
 #' @examples
 #' # Example data from rMeta
 #' data <- read.table(textConnection('
@@ -57,7 +58,7 @@
 #'
 #' # Approximate the Control Event Rates using a weighed median
 #' cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
-#
+#'
 #' # Calculate the Intervention Event Rates (IER) from the CER and point estimate
 #' ier <- calc.ier(cer, point, sm)
 #'
@@ -108,7 +109,7 @@ w.approx.cer <- function(ev.ctrl, n.ctrl) {
 #' @param cer Absolute risk with control (calculated; from 0 to 1)
 #' @param point Relative risk with intervention (direct from meta-analysis)
 #' @param sm The outcome measure, RR or OR as string
-#' @return Absolute risk with intervention as Intervention Event Rates (IER)
+#' @return Absolute risk of intervention as Intervention Event Rates (IER)
 calc.ier <- function(cer, point, sm) {
     if (sm == "RR") {
         return(cer * point)
@@ -195,7 +196,7 @@ round.with.warn <- function(x, f=ceiling, name=NULL) {
 #' Its intended use is similar to that of Cates Plots (Visual Rx, Number Needed to Treat visualization).
 #' Although these could be seen as Kuiper-Marshall plots.
 #'
-#' @export
+#' @export personograph
 #' @param data A list of names to percentages (from 0 to 1)
 #' @param icon.style A numeric from 1-11 indicating which of the included icons to use
 #' @param icon A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}
@@ -210,8 +211,8 @@ round.with.warn <- function(x, f=ceiling, name=NULL) {
 #' @return None.
 #' @examples
 #' data <- list(good= 0.8884758, helped = 0.04784283, harmed = 0, bad = 0.06368133)
-#' plot.personograph(data)
-plot.personograph <- function(data,
+#' personograph(data)
+personograph <- function(data,
                  fig.title=NULL,
                  fig.cap=NULL,
                  draw.legend=T,
@@ -342,7 +343,8 @@ plot.personograph <- function(data,
 }
 
 #' @export
-#' @seealso \code{\link{plot.personograph}}
+#' @method plot personograph.uplift
+#' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    plot.personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
+    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure3"), ...)
 }

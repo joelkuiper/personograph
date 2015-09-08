@@ -16,7 +16,7 @@ treatment.
 This terminology is similar to that of Uplift Modelling.
 }
 \details{
-The plot function \code{\link{plot.personograph}} is implemented in such a way that it's easy to just pass
+The plot function \code{\link{personograph}} is implemented in such a way that it's easy to just pass
 a named list of percentages, colors, and an icon. Making it potentially useful for other use cases as well.
 
 \if{html}{
@@ -59,6 +59,7 @@ if (requireNamespace("meta", quietly = TRUE)) { # use meta if available
 
 # Approximate the Control Event Rates using a weighed median
 cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
+
 # Calculate the Intervention Event Rates (IER) from the CER and point estimate
 ier <- calc.ier(cer, point, sm)
 
@@ -67,5 +68,10 @@ ier <- calc.ier(cer, point, sm)
 
 u <- uplift(ier, cer, higher_is_better=F)
 plot(u, fig.title="Example", fig.cap="Example from rMeta", draw.legend=T)
+}
+\seealso{
+\code{\link{personograph}}
+
+\code{\link{uplift}}
 }
 

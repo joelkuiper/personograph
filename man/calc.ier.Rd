@@ -14,7 +14,7 @@ calc.ier(cer, point, sm)
 \item{sm}{The outcome measure, RR or OR as string}
 }
 \value{
-Absolute risk with intervention as Intervention Event Rates (IER)
+Absolute risk of intervention as Intervention Event Rates (IER)
 }
 \description{
 Calculate the IER (Intervention Event Rates)
