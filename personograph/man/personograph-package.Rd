@@ -61,7 +61,7 @@ if (requireNamespace("meta", quietly = TRUE)) { # use meta if available
     ## Calculate the pooled OR or RR point estimate
     m <- with(data,
            meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
-    point <- exp(m$TE.random) # meta returns outcomes on the log scale
+    point <- exp(m$TE.random) # meta returns random effects estimate on the log scale
 } else {
     # Calculated Random Effects RR, using the meta package
     point <- 0.5710092
@@ -75,7 +75,6 @@ ier <- calc.ier(cer, point, sm)
 
 # Calcaulte the "uplift" statistics
 # Note that this depends on the direction of the outcome effect (higher_is_better)
-
 u <- uplift(ier, cer, higher_is_better=FALSE)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
 }

@@ -20,7 +20,7 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{icon}{A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}}
 
-\item{icon.dim}{The dimensions of icon as a vector c(width, height) of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied}
+\item{icon.dim}{The dimensions of icon as a vector \code{c(width, height)} of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied}
 
 \item{icon.style}{A numeric from 1-11 indicating which of the included icons to use}
 
@@ -28,9 +28,9 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{plot.width}{The percentage of width that the main plotting area should take (with respect to the frame)}
 
-\item{dimensions}{A vector of c(rows, columns) for the dimensions of the grid}
+\item{dimensions}{A vector of \code{c(rows, columns)} for the dimensions of the grid}
 
-\item{colors}{A vector of names to colors, must match the names in data. Uses the "gray.colors" style if none supplied}
+\item{colors}{A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied}
 
 \item{ask}{If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.}
 }

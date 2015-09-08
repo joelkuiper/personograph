@@ -15,7 +15,6 @@
 #' colors, and an icon. Making it potentially useful for other use
 #' cases as well.
 #'
-#'
 #' \if{html}{
 #' The example code will generate the following graph if \code{higher_is_better=F}:
 #'
@@ -62,7 +61,7 @@
 #'     ## Calculate the pooled OR or RR point estimate
 #'     m <- with(data,
 #'            meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
-#'     point <- exp(m$TE.random) # meta returns outcomes on the log scale
+#'     point <- exp(m$TE.random) # meta returns random effects estimate on the log scale
 #' } else {
 #'     # Calculated Random Effects RR, using the meta package
 #'     point <- 0.5710092
@@ -76,11 +75,9 @@
 #'
 #' # Calcaulte the "uplift" statistics
 #' # Note that this depends on the direction of the outcome effect (higher_is_better)
-#'
 #' u <- uplift(ier, cer, higher_is_better=FALSE)
 #' plot(u, fig.title="Example", fig.cap="Example from rMeta")
 NULL
-
 
 w.median <- function(x, w) {
     ## Lifted from cwhmisc, http://www.inside-r.org/packages/cran/cwhmisc/docs/w.median
@@ -149,13 +146,13 @@ calc.ier <- function(cer, point, sm) {
 #' @param higher_is_better logical indicating the direction of the outcome measure, default TRUE
 #' @return A list of S3 class \code{personograph.uplift} with the following elements:
 #' \itemize{
-#' \item{\code{good}} {people who are good no matter}
-#' \item{\code{bad}} {people who are bad no matter}
+#' \item{\code{good}} {people who are good regardless of treatment}
+#' \item{\code{bad}} {people who are bad regradless of treatment}
 #' \item{\code{helped}} {people who are helped by treatment}
 #' \item{\code{harmed}} {people who are harmed by treatment}
 #' }
 #'
-#' Can be plotted as a personograph with the S3 generic `plot`.
+#' Can be plotted as a personograph with the S3 generic \code{plot}.
 #' @examples
 #' ier <- 0.06368133
 #' cer <- 0.1115242
@@ -216,11 +213,11 @@ round.with.warn <- function(x, f=ceiling, name=NULL) {
 #' @param data A list of names to percentages (from 0 to 1)
 #' @param icon.style A numeric from 1-11 indicating which of the included icons to use
 #' @param icon A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}
-#' @param icon.dim The dimensions of icon as a vector c(width, height) of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied
+#' @param icon.dim The dimensions of icon as a vector \code{c(width, height)} of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied
 #' @param n.icons Number of icons to draw, defaults to 100
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
-#' @param dimensions A vector of c(rows, columns) for the dimensions of the grid
-#' @param colors A vector of names to colors, must match the names in data. Uses the "gray.colors" style if none supplied
+#' @param dimensions A vector of \code{c(rows, columns)} for the dimensions of the grid
+#' @param colors A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied
 #' @param ask If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.
 #' @param fig.cap Figure caption
 #' @param fig.title Figure title
