@@ -384,7 +384,7 @@ personograph <- function(data,
 
     popViewport()
     dev.flush()
-    NULL
+    return()
 }
 
 #' @export
