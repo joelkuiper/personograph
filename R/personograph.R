@@ -181,7 +181,12 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     ## [harmed] people who would be harmed by treatment
     harmed <- max(cer-ier, 0)
 
-    result <- list(good=good, helped=helped, harmed=harmed, bad=bad)
+    if(higher_is_better) {
+        result <- list("unharmed"=good, "harmed"=harmed, "unaffected"=bad)
+    } else {
+        result <- list("unharmed"=good, "helped"=helped, "unaffected"=bad)
+    }
+
     class(result) <- "personograph.uplift"
     result
 }
@@ -209,9 +214,9 @@ round.with.warn <- function(x, f=round.standard, name=NULL) {
 naturalfreq <- function(ar, denominator=100) {
     numerator <- ar * denominator
     if(numerator > 0 && numerator <0.5) {
-        return(paste("<1 in", denominator))
+        return(paste0("< 1/", denominator))
     } else {
-        return(paste(round.standard(numerator), "in", denominator))
+        return(paste0(round.standard(numerator), "/", denominator))
     }
 }
 
@@ -274,10 +279,10 @@ personograph <- function(data,
         ncol    = 1,
         heights = unit(master.heights, rep("null", 4)))
 
-    vp1 <- viewport(layout.pos.row=1, name="title")
-    vp2 <- viewport(layout.pos.row=2, name="plot")
-    vp3 <- viewport(layout.pos.row=3, name="legend")
-    vp4 <- viewport(layout.pos.row=4, name="caption")
+    vp1 <- viewport(layout.pos.row=1, layout.pos.col = 1, name="title")
+    vp2 <- viewport(layout.pos.row=2, layout.pos.col = 1, name="plot")
+    vp3 <- viewport(layout.pos.row=3, layout.pos.col = 1, name="legend")
+    vp4 <- viewport(layout.pos.row=4, layout.pos.col = 1, name="caption")
 
     pushViewport(vpTree(viewport(layout = masterLayout, name = "master"), vpList(vp1, vp2, vp3, vp4)))
 
@@ -302,16 +307,16 @@ personograph <- function(data,
         icon.width <- icon.dim[2]
     }
 
-    n <- names(data)
-    counts <- sapply(n, function(name) {
-        x <- data[[which(n == name)]]
+    data.names <- names(data)
+    counts <- sapply(data.names, function(name) {
+        x <- data[[which(data.names == name)]]
         round.with.warn(x * n.icons, name=name)}, simplify = FALSE, USE.NAMES = TRUE)
 
     if(is.null(colors)) {
         colors <- as.colors(data)
     }
 
-    flat <- unlist(lapply(n, function(name) { rep(name, counts[[name]])}))
+    flat <- unlist(lapply(data.names, function(name) { rep(name, counts[[name]])}))
 
     row_height <- icon.height
     total <- 0
@@ -334,7 +339,7 @@ personograph <- function(data,
             }
         }
     }
-    plotGrobs <- do.call(grobTree, grobs)
+    plotGrobs <- do.call(gList, grobs)
     grid.draw(plotGrobs)
     popViewport(2)
 
@@ -342,22 +347,25 @@ personograph <- function(data,
 
     if(draw.legend) {
         seekViewport("legend")
-        legend.cols <- length(n)
+
+        legend.cols <- length(data.names)
         pushViewport(viewport(
+            clip=F,
             width  = unit(0.8, "npc"),
-            x      = unit(0.55, "npc"),
             layout = grid.layout(ncol=legend.cols * 2,
                                  nrow=1,
-                                 respect=T,
+                                 widths=unit(2.5, "cm"),
                                  heights=unit(0.25, "npc"))))
+
 
         idx <- 0
 
-        for(name in n)  {
+        for(name in data.names)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
             grid.circle(x=0, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
+
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
             grid.text(x=unit(-0.8, "npc"), paste(naturalfreq(data[[name]], denominator=n.icons), name), gp=font, just="left")
@@ -373,6 +381,7 @@ personograph <- function(data,
         popViewport()
     }
 
+
     popViewport()
     dev.flush()
 }
@@ -381,5 +390,6 @@ personograph <- function(data,
 #' @method plot personograph.uplift
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    personograph(x, colors=list(harmed="firebrick3", helped="olivedrab3", bad="azure4", good="azure2"), ...)
+    colors <- list(harmed="firebrick3", helped="olivedrab3", unaffected="azure4", unharmed="azure2")
+    personograph(x, colors=colors, ...)
 }

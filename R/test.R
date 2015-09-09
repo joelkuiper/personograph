@@ -32,3 +32,21 @@ u <- uplift(ier, cer, F)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
 
 #dev.off()
+
+
+## Draw documentation graphics
+u <- uplift(ier, cer, F)
+pdf("~/Desktop/green.pdf", 8, 10)
+plot(u, fig.title="Example", fig.cap="Example from rMeta")
+dev.off()
+png("~/Desktop/green.png", 800, 1000)
+plot(u, fig.title="Example", fig.cap="Example from rMeta")
+dev.off()
+
+u <- uplift(ier, cer, T)
+pdf("~/Desktop/red.pdf", 8, 10)
+plot(u, fig.title="Example", fig.cap="Example from rMeta")
+dev.off()
+png("~/Desktop/red.png", 800, 1000)
+plot(u, fig.title="Example", fig.cap="Example from rMeta")
+dev.off()
