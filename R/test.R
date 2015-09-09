@@ -26,27 +26,23 @@ if (requireNamespace("meta", quietly = TRUE)) {
 
 ier <- calc.ier(cer, point, sm)
 
-#pdf("~/Desktop/green.pdf", 8, 10)
-
 u <- uplift(ier, cer, F)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
-
-#dev.off()
 
 
 ## Draw documentation graphics
 u <- uplift(ier, cer, F)
-pdf("~/Desktop/green.pdf", 8, 10)
+pdf("/man/figures/green.pdf", 8, 10)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
 dev.off()
-png("~/Desktop/green.png", 800, 1000)
+png("/man/figures/green.png", 800, 1000)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
 dev.off()
 
 u <- uplift(ier, cer, T)
-pdf("~/Desktop/red.pdf", 8, 10)
+pdf("/man/figures/red.pdf", 8, 10)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
 dev.off()
-png("~/Desktop/red.png", 800, 1000)
+png("/man/figures/red.png", 800, 1000)
 plot(u, fig.title="Example", fig.cap="Example from rMeta")
 dev.off()
