@@ -7,7 +7,7 @@
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
   icon = NULL, icon.dim = NULL, icon.style = 1, n.icons = 100,
   plot.width = 0.6, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
-  colors = as.colors(data), ask = dev.interactive(orNone = TRUE))
+  colors = as.colors(data))
 }
 \arguments{
 \item{data}{A list of names to percentages (from 0 to 1)}
@@ -31,8 +31,6 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 \item{dimensions}{A vector of \code{c(rows, columns)} for the dimensions of the grid}
 
 \item{colors}{A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied}
-
-\item{ask}{If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.}
 }
 \value{
 None.

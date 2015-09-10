@@ -243,7 +243,6 @@ setColor <- function(icon, color) {
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
 #' @param dimensions A vector of \code{c(rows, columns)} for the dimensions of the grid
 #' @param colors A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied
-#' @param ask If TRUE, a prompt will be displayed before generating the next page of a multi-page plot.
 #' @param fig.cap Figure caption
 #' @param fig.title Figure title
 #' @param draw.legend Logical indicating whether to draw the legend
@@ -261,11 +260,10 @@ personograph <- function(data,
                  n.icons=100,
                  plot.width=0.6,
                  dimensions=ceiling(sqrt(c(n.icons, n.icons))),
-                 colors=as.colors(data),
-                 ask=dev.interactive(orNone=TRUE)) {
+                 colors=as.colors(data)) {
+
     devAskNewPage(FALSE)
-    plot.new()
-    devAskNewPage(ask)
+    grid.newpage()
 
     fontfamily <- c("Helvetica", "Arial")
 
