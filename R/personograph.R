@@ -274,8 +274,8 @@ personograph <- function(data,
     }
 
     master.rows <- sum(!is.null(fig.title), !is.null(draw.legend), !is.null(fig.cap))
-    master.heights <- c(0.2,
-                       0.9 - (master.rows * 0.1),
+    master.heights <- c(0.1,
+                       1 - (master.rows * 0.1),
                        ifelse(draw.legend, .1, 0),
                        ifelse(!is.null(fig.cap), .1, 0))
 
@@ -287,7 +287,7 @@ personograph <- function(data,
     vp1 <- viewport(layout.pos.row=1, layout.pos.col = 1, name="title")
     vp2 <- viewport(layout.pos.row=2, layout.pos.col = 1, name="plot")
     vp3 <- viewport(layout.pos.row=3, layout.pos.col = 1, name="legend")
-    vp4 <- viewport(layout.pos.row=4, layout.pos.col = 1, name="caption")
+    vp4 <- viewport(layout.pos.row=4, layout.pos.col = 1, name="caption", just=c("centre", "top"))
 
     pushViewport(vpTree(viewport(layout = masterLayout, name = "master"), vpList(vp1, vp2, vp3, vp4)))
 
