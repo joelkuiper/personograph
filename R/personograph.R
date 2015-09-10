@@ -258,7 +258,7 @@ personograph <- function(data,
                  icon.dim=NULL,
                  icon.style=1,
                  n.icons=100,
-                 plot.width=0.6,
+                 plot.width=0.8,
                  dimensions=ceiling(sqrt(c(n.icons, n.icons))),
                  colors=as.colors(data)) {
 
