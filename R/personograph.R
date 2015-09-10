@@ -375,7 +375,7 @@ personograph <- function(data,
         for(name in data.names)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.circle(x=0.5, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
+            grid.circle(x=0.4, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
 
             idx <- idx + 1
