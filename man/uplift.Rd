@@ -16,8 +16,8 @@ uplift(ier, cer, higher_is_better = NULL)
 \value{
 A list of S3 class \code{personograph.uplift} with the following elements:
 \itemize{
-\item{\code{good}} {people who are good regardless of treatment}
-\item{\code{bad}} {people who are bad regradless of treatment}
+\item{\code{good outcome}} {people who are good regardless of treatment}
+\item{\code{bad outcome}} {people who are bad regradless of treatment}
 \item{\code{treatment benefit}} {people who benefit from treatment}
 \item{\code{treatment harm}} {people who are harmed by treatment}
 }
