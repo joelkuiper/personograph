@@ -272,8 +272,8 @@ personograph <- function(data,
     }
 
     master.rows <- sum(!is.null(draw.legend), !is.null(fig.cap))
-    master.heights <- c(0.2,
-                       0.8 - (master.rows * 0.1),
+    master.heights <- c(0.1,
+                       0.9 - (master.rows * 0.1),
                        ifelse(draw.legend, .1, 0),
                        ifelse(!is.null(fig.cap), .1, 0))
 
