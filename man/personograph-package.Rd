@@ -6,13 +6,13 @@
 \title{Generate personograph plots from data}
 \description{
 A personograph (Kuiper-Marshall plot) is a pictographic
-representation of relative harm and benefit from a treatment. It is
+representation of relative harm and benefit from a intevention. It is
 similar to
 \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 Plots)}. Each icon on the grid is colored to indicate whether that
-percentage of people is harmed by the treatment, would treatment benefit from the
-treatment, has good outcome regardless of treatment, or bad outcome regardless of
-treatment.
+percentage of people is harmed by the intevention, would intevention benefit from the
+intevention, has good outcome regardless of intevention, or bad outcome regardless of
+intevention.
 This terminology is similar to that of Uplift Modelling.
 }
 \details{
