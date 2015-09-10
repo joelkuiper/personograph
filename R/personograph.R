@@ -271,11 +271,11 @@ personograph <- function(data,
         icon <- readPicture(system.file(paste0(icon.style, ".ps.xml"), package="personograph"))
     }
 
-    master.rows <- sum(!is.null(draw.legend), !is.null(fig.cap))
+    master.rows <- sum(draw.legend, !is.null(fig.cap))
     master.heights <- c(0.1,
                        0.9 - (master.rows * 0.1),
                        ifelse(draw.legend, .1, 0),
-                       ifelse(!is.null(fig.cap), .1, 0))
+                       ifelse(!is.null(fig.cap) || !draw.legend, .1, 0))
 
     masterLayout <- grid.layout(
         nrow    = 4,
