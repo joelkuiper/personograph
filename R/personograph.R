@@ -220,6 +220,11 @@ naturalfreq <- function(ar, denominator=100) {
     }
 }
 
+setColor <- function(icon, color) {
+    for(i in seq_along(icon@paths)) { icon@paths[[i]]@rgb <- color}
+    icon
+}
+
 #' Plots a personograph
 #'
 #' Plots a personograph from a list with with percentages (must sum to
@@ -318,29 +323,47 @@ personograph <- function(data,
 
     flat <- unlist(lapply(data.names, function(name) { rep(name, counts[[name]])}))
 
-    row_height <- icon.height
-    total <- 0
-    grobs <- c(NULL)
-    for (i in rows:1) {
-        for (j in 1:cols) {
-            total <- total + 1
+    colorMatrix <- function(flat, colors) {
+        m <- matrix(nrow=rows, ncol=cols)
+        total <- 0
+        for (i in rows:1) {
+            for (j in 1:cols) {
+                total <- total + 1
 
-            j_snake <- ifelse((i %% 2 == 1), j, cols - j + 1) # to group like icons together
-
-            x <- (j_snake * icon.width) - icon.width + (j_snake * (icon.width / cols))
-            y <- i * row_height
-            if(total < length(flat) + 1) {
-                type <- flat[[total]]
-                grob <- pictureGrob(icon, x, y,
-                                   gp=gpar(fill=colors[[type]], col=NA), use.gc=F,
-                                   width=icon.width,
-                                   height=icon.height)
-                grobs[[total]] <- grob
+                j_snake <- ifelse((i %% 2 == 1), j, cols - j + 1) # to group like icons together
+                m[i,j_snake] <- colors[[flat[[total]]]]
             }
         }
+        m
     }
-    plotGrobs <- do.call(gList, grobs)
-    grid.draw(plotGrobs)
+
+    colorMask <- function(colorMatrix, color) {
+        return(ifelse(colorMatrix == color, color, NA))
+    }
+
+    coordinates <- function(colorMask, width, height) {
+        originalDim <- dim(colorMask)
+        rows <- originalDim[1]
+        cols <- originalDim[2]
+
+        x <- matrix(seq(width, 1, by=width), nrow=rows, ncol=cols, byrow=T)
+        y <- matrix(seq(width, 1, by=width), nrow=rows, ncol=cols, byrow=F)
+
+
+        list(x=x[which(!is.na(colorMask), TRUE)], y=y[which(!is.na(colorMask), TRUE)])
+    }
+
+    colorM <- colorMatrix(flat, colors)
+
+    for(name in data.names) {
+        color <- colors[[name]]
+        mask <- colorMask(colorM, color)
+        coords <- coordinates(mask, icon.width, icon.height)
+        icon <- setColor(icon, color)
+        grid.symbols(icon, x=coords$x, y=coords$y, size=min(icon.height, icon.width) - 0.0025)
+    }
+
+
     popViewport(2)
 
     font <- gpar(fontsize=11, fontfamily)
@@ -371,7 +394,6 @@ personograph <- function(data,
 
 
         idx <- 0
-
         for(name in data.names)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
