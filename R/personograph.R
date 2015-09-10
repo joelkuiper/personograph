@@ -298,9 +298,6 @@ personograph <- function(data,
         popViewport()
     }
 
-    seekViewport("plot")
-    pushViewport(viewport(width=unit(plot.width, "npc")))
-
     rows <- dimensions[1]
     cols <- dimensions[2]
 
@@ -323,15 +320,19 @@ personograph <- function(data,
 
     flat <- unlist(lapply(data.names, function(name) { rep(name, counts[[name]])}))
 
+    seekViewport("plot")
+    pushViewport(viewport(width=unit(plot.width, "npc")))
+
     colorMatrix <- function(flat, colors) {
         m <- matrix(nrow=rows, ncol=cols)
         total <- 0
         for (i in rows:1) {
             for (j in 1:cols) {
                 total <- total + 1
-
-                j_snake <- ifelse((i %% 2 == 1), j, cols - j + 1) # to group like icons together
-                m[i,j_snake] <- colors[[flat[[total]]]]
+                if(total < length(flat) + 1) {
+                    j_snake <- ifelse((i %% 2 == 1), j, cols - j + 1) # to group like icons together
+                    m[i,j_snake] <- colors[[flat[[total]]]]
+                }
             }
         }
         m
@@ -347,8 +348,7 @@ personograph <- function(data,
         cols <- originalDim[2]
 
         x <- matrix(seq(width, 1, by=width), nrow=rows, ncol=cols, byrow=T)
-        y <- matrix(seq(width, 1, by=width), nrow=rows, ncol=cols, byrow=F)
-
+        y <- matrix(seq(height, 1, by=height), nrow=rows, ncol=cols, byrow=F)
 
         list(x=x[which(!is.na(colorMask), TRUE)], y=y[which(!is.na(colorMask), TRUE)])
     }
@@ -360,10 +360,8 @@ personograph <- function(data,
         mask <- colorMask(colorM, color)
         coords <- coordinates(mask, icon.width, icon.height)
         icon <- setColor(icon, color)
-        grid.symbols(icon, x=coords$x, y=coords$y, size=min(icon.height, icon.width) - 0.0025)
+        grid.symbols(icon, x=coords$x, y=coords$y, size=max(icon.height, icon.width) - 0.0025)
     }
-
-
     popViewport(2)
 
     font <- gpar(fontsize=11, fontfamily)
@@ -415,8 +413,7 @@ personograph <- function(data,
         popViewport()
     }
 
-
-    popViewport()
+    popViewport(1)
     dev.flush()
     return(invisible(NULL))
 }
