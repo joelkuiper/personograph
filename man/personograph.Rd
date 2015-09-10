@@ -46,7 +46,7 @@ Treat visualization).
 Although these could be seen as Kuiper-Marshall plots.
 }
 \examples{
-data <- list(good= 0.8884758, helped = 0.04784283, harmed = 0, bad = 0.06368133)
+data <- list(good= 0.8884758, benefit = 0.04784283, harmed = 0, bad = 0.06368133)
 personograph(data)
 }
 

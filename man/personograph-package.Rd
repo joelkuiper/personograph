@@ -10,8 +10,8 @@ representation of relative harm and benefit from a treatment. It is
 similar to
 \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 Plots)}. Each icon on the grid is colored to indicate whether that
-percentage of people is harmed by the treatment, helped by the
-treatment, healthy regardless of treatment, or ill regardless of
+percentage of people is harmed by the treatment, would treatment benefit from the
+treatment, has good outcome regardless of treatment, or bad outcome regardless of
 treatment.
 This terminology is similar to that of Uplift Modelling.
 }

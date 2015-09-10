@@ -18,14 +18,14 @@ A list of S3 class \code{personograph.uplift} with the following elements:
 \itemize{
 \item{\code{good}} {people who are good regardless of treatment}
 \item{\code{bad}} {people who are bad regradless of treatment}
-\item{\code{helped}} {people who are helped by treatment}
-\item{\code{harmed}} {people who are harmed by treatment}
+\item{\code{treatment benefit}} {people who benefit from treatment}
+\item{\code{treatment harm}} {people who are harmed by treatment}
 }
 
 Can be plotted as a personograph with the S3 generic \code{plot}.
 }
 \description{
-Calculates the percentage (from 0 to 1) of people helped, harmed, bad, and good
+Calculates the percentage (from 0 to 1) of people treatment benefit, treatment harm, bad, and good
 from the Intervention Event Rates (IER) and Control Event Rates (CER).
 Note that the result depends on the direction of the outcome measure,
 e.g. \code{higher_is_better = T} (default) for treatment efficacy, \code{higher_is_better = F} for

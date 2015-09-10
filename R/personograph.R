@@ -5,8 +5,8 @@
 #' similar to
 #' \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 #' Plots)}. Each icon on the grid is colored to indicate whether that
-#' percentage of people is harmed by the treatment, helped by the
-#' treatment, healthy regardless of treatment, or ill regardless of
+#' percentage of people is harmed by the treatment, would treatment benefit from the
+#' treatment, has good outcome regardless of treatment, or bad outcome regardless of
 #' treatment.
 #' This terminology is similar to that of Uplift Modelling.
 #'
@@ -131,7 +131,7 @@ calc.ier <- function(cer, point, sm) {
 
 #' "Uplift" from IER and CER
 #'
-#' Calculates the percentage (from 0 to 1) of people helped, harmed, bad, and good
+#' Calculates the percentage (from 0 to 1) of people treatment benefit, treatment harm, bad, and good
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
 #' e.g. \code{higher_is_better = T} (default) for treatment efficacy, \code{higher_is_better = F} for
@@ -148,8 +148,8 @@ calc.ier <- function(cer, point, sm) {
 #' \itemize{
 #' \item{\code{good}} {people who are good regardless of treatment}
 #' \item{\code{bad}} {people who are bad regradless of treatment}
-#' \item{\code{helped}} {people who are helped by treatment}
-#' \item{\code{harmed}} {people who are harmed by treatment}
+#' \item{\code{treatment benefit}} {people who benefit from treatment}
+#' \item{\code{treatment harm}} {people who are harmed by treatment}
 #' }
 #'
 #' Can be plotted as a personograph with the S3 generic \code{plot}.
@@ -169,22 +169,22 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
         cer <- 1 - cer
     }
 
-    ## [good] people who are good no matter what treatment
+    ## [good outcome] people who are good no matter what treatment
     good <- min(ier, cer)
 
-    ## [bad] people who are bad no matter what treatment
+    ## [bad outcome] people who are bad no matter what treatment
     bad <- 1-max(ier, cer)
 
-    ## [helped] people who would be saved by treatment
-    helped <- max(ier-cer, 0)
+    ## [treatment benefit] people who would be benefit from the treatment
+    benefit <- max(ier-cer, 0)
 
-    ## [harmed] people who would be harmed by treatment
-    harmed <- max(cer-ier, 0)
+    ## [treatment harm] people who would harmed by treatment
+    harm <- max(cer-ier, 0)
 
     if(higher_is_better) {
-        result <- list("unharmed"=good, "harmed"=harmed, "unaffected"=bad)
+        result <- list("good outcome"=good, "treatment harm"=harm, "bad outcome"=bad)
     } else {
-        result <- list("unharmed"=good, "helped"=helped, "unaffected"=bad)
+        result <- list("good outcome"=good, "treatment benefit"=benefit, "bad outcome"=bad)
     }
 
     class(result) <- "personograph.uplift"
@@ -244,7 +244,7 @@ naturalfreq <- function(ar, denominator=100) {
 #' @param draw.legend Logical indicating whether to draw the legend
 #' @return None.
 #' @examples
-#' data <- list(good= 0.8884758, helped = 0.04784283, harmed = 0, bad = 0.06368133)
+#' data <- list(good= 0.8884758, benefit = 0.04784283, harmed = 0, bad = 0.06368133)
 #' personograph(data)
 personograph <- function(data,
                  fig.title=NULL,
@@ -403,6 +403,6 @@ personograph <- function(data,
 #' @method plot personograph.uplift
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    colors <- list(harmed="firebrick3", helped="olivedrab3", unaffected="azure4", unharmed="azure2")
+    colors <- list("treatment harm"="firebrick3", "treatment benefit"="olivedrab3", "bad outcome"="azure4", "good outcome"="azure2")
     personograph(x, colors=colors, ...)
 }
