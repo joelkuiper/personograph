@@ -347,8 +347,8 @@ personograph <- function(data,
         rows <- originalDim[1]
         cols <- originalDim[2]
 
-        x <- matrix(seq(width, 1, by=width), nrow=rows, ncol=cols, byrow=T)
-        y <- matrix(seq(height, 1, by=height), nrow=rows, ncol=cols, byrow=F)
+        x <- matrix(seq((width/2), 1 - (width/2), by=width), nrow=rows, ncol=cols, byrow=T)
+        y <- matrix(seq((height/2), 1 - (height/2), by=height), nrow=rows, ncol=cols, byrow=F)
 
         list(x=x[which(!is.na(colorMask), TRUE)], y=y[which(!is.na(colorMask), TRUE)])
     }
