@@ -357,8 +357,10 @@ personograph <- function(data,
         color <- colors[[name]]
         mask <- colorMask(colorM, color)
         coords <- coordinates(mask, icon.width, icon.height)
-        icon <- setColor(icon, color)
-        grid.symbols(icon, x=coords$x, y=coords$y, size=max(icon.height, icon.width) - 0.0025)
+        if(length(coords$x) > 0 && length(coords$y) > 0) {
+            icon <- setColor(icon, color)
+            grid.symbols(icon, x=coords$x, y=coords$y, size=max(icon.height, icon.width) - 0.0025)
+        }
     }
     popViewport(2)
 
