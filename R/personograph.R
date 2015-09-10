@@ -1,7 +1,7 @@
 #' Generate personograph plots from data
 #'
 #' A personograph (Kuiper-Marshall plot) is a pictographic
-#' representation of relative harm and benefit from a intervention. It is
+#' representation of relative harm and benefit from an intervention. It is
 #' similar to
 #' \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 #' Plots)}. Each icon on the grid is colored to indicate whether that
