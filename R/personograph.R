@@ -273,9 +273,9 @@ personograph <- function(data,
         icon <- readPicture(system.file(paste0(icon.style, ".ps.xml"), package="personograph"))
     }
 
-    master.rows <- sum(!is.null(fig.title), !is.null(draw.legend), !is.null(fig.cap))
-    master.heights <- c(0.1,
-                       1 - (master.rows * 0.1),
+    master.rows <- sum(!is.null(draw.legend), !is.null(fig.cap))
+    master.heights <- c(0.2,
+                       0.8 - (master.rows * 0.1),
                        ifelse(draw.legend, .1, 0),
                        ifelse(!is.null(fig.cap), .1, 0))
 
@@ -383,7 +383,7 @@ personograph <- function(data,
         legendWidths <- c(rbind(rep(unit(0.25, "inches"), legendCols), unlist(legendWidths)))
 
         pushViewport(viewport(
-            clip=F,
+            clip   = F,
             width  = unit(0.8, "npc"),
             layout = grid.layout(ncol=legendCols * 2,
                                  nrow=1,
@@ -413,7 +413,6 @@ personograph <- function(data,
         popViewport()
     }
 
-    popViewport(1)
     dev.flush()
     return(invisible(NULL))
 }
