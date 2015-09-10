@@ -348,13 +348,25 @@ personograph <- function(data,
     if(draw.legend) {
         seekViewport("legend")
 
-        legend.cols <- length(data.names)
+        legendCols <- length(data.names)
+
+        legendGrobs <- list()
+        legendWidths <- list()
+        for(name in data.names) {
+            label <- paste(naturalfreq(data[[name]], denominator=n.icons), name)
+            grob <- textGrob(label, gp=font, just="left", x=-0)
+            legendGrobs[[name]] <- grob
+            legendWidths[[name]] <- widthDetails(grob)
+        }
+
+        legendWidths <- c(rbind(rep(unit(0.25, "inches"), legendCols), unlist(legendWidths)))
+
         pushViewport(viewport(
             clip=F,
             width  = unit(0.8, "npc"),
-            layout = grid.layout(ncol=legend.cols * 2,
+            layout = grid.layout(ncol=legendCols * 2,
                                  nrow=1,
-                                 widths=unit(2.5, "cm"),
+                                 widths=unit(legendWidths, "inches"),
                                  heights=unit(0.25, "npc"))))
 
 
@@ -363,12 +375,12 @@ personograph <- function(data,
         for(name in data.names)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.circle(x=0, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
+            grid.circle(x=0.5, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
 
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.text(x=unit(-0.8, "npc"), paste(naturalfreq(data[[name]], denominator=n.icons), name), gp=font, just="left")
+            grid.draw(legendGrobs[[name]])
             popViewport()
         }
 
