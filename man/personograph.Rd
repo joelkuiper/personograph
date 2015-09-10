@@ -6,7 +6,7 @@
 \usage{
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
   icon = NULL, icon.dim = NULL, icon.style = 1, n.icons = 100,
-  plot.width = 0.6, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
+  plot.width = 0.75, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
   colors = as.colors(data))
 }
 \arguments{
@@ -16,11 +16,11 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{fig.cap}{Figure caption}
 
-\item{draw.legend}{Logical indicating whether to draw the legend}
+\item{draw.legend}{Logical if TRUE (default) draw the legend}
 
 \item{icon}{A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}}
 
-\item{icon.dim}{The dimensions of icon as a vector \code{c(width, height)} of \code{unit} or numerical, calculated from the \code{dimensions} if not supplied}
+\item{icon.dim}{The dimensions of icon as a vector \code{c(width, height)} of \code{unit} or numerical. Calculated from the \code{dimensions} if not supplied}
 
 \item{icon.style}{A numeric from 1-11 indicating which of the included icons to use}
 
@@ -36,7 +36,7 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 None.
 }
 \description{
-Plots a personograph from a list with with percentages (must sum to
+Plots a personograph from a named list with percentages (must sum to
 1). A personograph is a graphical represenation of relative benefit
 or harm, using a grid of icons with different colors. Its intended
 use is similar to that of Cates Plots (Visual Rx, Number Needed to
@@ -44,7 +44,11 @@ Treat visualization).
 Although these could be seen as Kuiper-Marshall plots.
 }
 \examples{
-data <- list(good= 0.8884758, benefit = 0.04784283, harmed = 0, bad = 0.06368133)
+data <- list(first=0.9, second=0.1)
 personograph(data)
+# With colors
+personograph(data, colors=list(first="red", second="blue"))
+# Plot a thousand in a 20x50 grid
+personograph(data, n.icons=1000, dimensions=c(20,50))
 }
 
