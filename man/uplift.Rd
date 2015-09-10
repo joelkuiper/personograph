@@ -16,19 +16,19 @@ uplift(ier, cer, higher_is_better = NULL)
 \value{
 A list of S3 class \code{personograph.uplift} with the following elements:
 \itemize{
-\item{\code{good outcome}} {people who have a good outcome regardless of intevention}
-\item{\code{bad outcome}} {people who have a bad outcome regradless of intevention}
-\item{\code{intevention benefit}} {people who benefit from intevention}
-\item{\code{intevention harm}} {people who are harmed by intevention}
+\item{\code{good outcome}} {people who have a good outcome regardless of intervention}
+\item{\code{bad outcome}} {people who have a bad outcome regradless of intervention}
+\item{\code{intervention benefit}} {people who benefit from intervention}
+\item{\code{intervention harm}} {people who are harmed by intervention}
 }
 
 Can be plotted as a personograph with the S3 generic \code{plot}.
 }
 \description{
-Calculates the percentage (from 0 to 1) of people intevention benefit, intevention harm, bad, and good
+Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad, and good
 from the Intervention Event Rates (IER) and Control Event Rates (CER).
 Note that the result depends on the direction of the outcome measure,
-e.g. \code{higher_is_better = T} (default) for intevention efficacy, \code{higher_is_better = F} for
+e.g. \code{higher_is_better = T} (default) for intervention efficacy, \code{higher_is_better = F} for
 adverse events.
 }
 \details{

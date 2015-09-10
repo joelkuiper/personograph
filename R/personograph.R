@@ -1,13 +1,13 @@
 #' Generate personograph plots from data
 #'
 #' A personograph (Kuiper-Marshall plot) is a pictographic
-#' representation of relative harm and benefit from a intevention. It is
+#' representation of relative harm and benefit from a intervention. It is
 #' similar to
 #' \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 #' Plots)}. Each icon on the grid is colored to indicate whether that
-#' percentage of people is harmed by the intevention, would intevention benefit from the
-#' intevention, has good outcome regardless of intevention, or bad outcome regardless of
-#' intevention.
+#' percentage of people is harmed by the intervention, would benefit from the
+#' intervention, has good outcome regardless of intervention, or bad outcome regardless of
+#' intervention.
 #' This terminology is similar to that of Uplift Modelling.
 #'
 #' The plot function \code{\link{personograph}} is implemented in such
@@ -131,10 +131,10 @@ calc.ier <- function(cer, point, sm) {
 
 #' "Uplift" from IER and CER
 #'
-#' Calculates the percentage (from 0 to 1) of people intevention benefit, intevention harm, bad, and good
+#' Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad, and good
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
-#' e.g. \code{higher_is_better = T} (default) for intevention efficacy, \code{higher_is_better = F} for
+#' e.g. \code{higher_is_better = T} (default) for intervention efficacy, \code{higher_is_better = F} for
 #' adverse events.
 #'
 #' The adopted terminology is similar to that of Uplift modelling
@@ -146,10 +146,10 @@ calc.ier <- function(cer, point, sm) {
 #' @param higher_is_better logical indicating the direction of the outcome measure, default TRUE
 #' @return A list of S3 class \code{personograph.uplift} with the following elements:
 #' \itemize{
-#' \item{\code{good outcome}} {people who have a good outcome regardless of intevention}
-#' \item{\code{bad outcome}} {people who have a bad outcome regradless of intevention}
-#' \item{\code{intevention benefit}} {people who benefit from intevention}
-#' \item{\code{intevention harm}} {people who are harmed by intevention}
+#' \item{\code{good outcome}} {people who have a good outcome regardless of intervention}
+#' \item{\code{bad outcome}} {people who have a bad outcome regradless of intervention}
+#' \item{\code{intervention benefit}} {people who benefit from intervention}
+#' \item{\code{intervention harm}} {people who are harmed by intervention}
 #' }
 #'
 #' Can be plotted as a personograph with the S3 generic \code{plot}.
@@ -169,22 +169,22 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
         cer <- 1 - cer
     }
 
-    ## [good outcome] people who are good no matter what intevention
+    ## [good outcome] people who are good no matter what intervention
     good <- min(ier, cer)
 
-    ## [bad outcome] people who are bad no matter what intevention
+    ## [bad outcome] people who are bad no matter what intervention
     bad <- 1-max(ier, cer)
 
-    ## [intevention benefit] people who would be benefit from the intevention
+    ## [intervention benefit] people who would be benefit from the intervention
     benefit <- max(ier-cer, 0)
 
-    ## [intevention harm] people who would harmed by intevention
+    ## [intervention harm] people who would harmed by intervention
     harm <- max(cer-ier, 0)
 
     if(higher_is_better) {
-        result <- list("good outcome"=good, "intevention harm"=harm, "bad outcome"=bad)
+        result <- list("good outcome"=good, "intervention harm"=harm, "bad outcome"=bad)
     } else {
-        result <- list("good outcome"=good, "intevention benefit"=benefit, "bad outcome"=bad)
+        result <- list("good outcome"=good, "intervention benefit"=benefit, "bad outcome"=bad)
     }
 
     class(result) <- "personograph.uplift"
@@ -421,6 +421,6 @@ personograph <- function(data,
 #' @method plot personograph.uplift
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
-    colors <- list("intevention harm"="firebrick3", "intevention benefit"="olivedrab3", "bad outcome"="azure4", "good outcome"="azure2")
+    colors <- list("intervention harm"="firebrick3", "intervention benefit"="olivedrab3", "bad outcome"="azure4", "good outcome"="azure2")
     personograph(x, colors=colors, ...)
 }
