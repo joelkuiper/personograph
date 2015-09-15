@@ -1,7 +1,32 @@
 # Personograph
 
+ A personograph (Kuiper-Marshall plot) is a pictographic
+ representation of relative harm and benefit from an intervention. It
+ is similar to
+ [Visual Rx (Cates Plots)](http://www.nntonline.net/visualrx/examples/).
+ Each icon on the grid is colored to indicate whether that percentage
+ of people is harmed by the intervention, would benefit from the
+ intervention, has good outcome regardless of intervention, or bad
+ outcome regardless of intervention. This terminology is similar to
+ that of
+ [Uplift Modelling](https://en.wikipedia.org/wiki/Uplift_modelling).
+
+ The plot function `personograph` is implemented in such a way that
+ it's easy to just pass a named list of percentages, colors, and an
+ icon. Making it potentially useful for other use cases as well.
+
+
 ![higher_is_better=F](/man/figures/green.png?raw=true)
 ![higher_is_better=T](/man/figures/red.png?raw=true)
+
+## Installation
+
+```
+# install.packages("devtools")
+devtools::install_github("joelkuiper/personograph")
+```
+
+(submission to CRAN pending)
 
 ## Development
 Install `devtools` and `roxygen2`.
