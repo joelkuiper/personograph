@@ -238,7 +238,7 @@ setColor <- function(icon, color) {
 #' @param data A list of names to percentages (from 0 to 1)
 #' @param icon.style A numeric from 1-11 indicating which of the included icons to use
 #' @param icon A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}
-#' @param icon.dim The dimensions of icon as a vector \code{c(width, height)} of \code{unit} or numerical. Calculated from the \code{dimensions} if not supplied
+#' @param icon.dim The dimensions of icon as a vector \code{c(width, height)} as numerical. Calculated from the \code{dimensions} if not supplied
 #' @param n.icons Number of icons to draw, defaults to 100
 #' @param plot.width The percentage of width that the main plotting area should take (with respect to the frame)
 #' @param dimensions A vector of \code{c(rows, columns)} for the dimensions of the grid

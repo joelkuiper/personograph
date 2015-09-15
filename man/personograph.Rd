@@ -20,7 +20,7 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{icon}{A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}}
 
-\item{icon.dim}{The dimensions of icon as a vector \code{c(width, height)} of \code{unit} or numerical. Calculated from the \code{dimensions} if not supplied}
+\item{icon.dim}{The dimensions of icon as a vector \code{c(width, height)} as numerical. Calculated from the \code{dimensions} if not supplied}
 
 \item{icon.style}{A numeric from 1-11 indicating which of the included icons to use}
 
