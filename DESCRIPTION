@@ -10,7 +10,7 @@ LazyData: true
 URL: https://github.com/joelkuiper/personograph
 Depends:
   R (>= 3.1.0),
-  grImport,
+  grImport
 Imports:
   stats,
   grDevices,
