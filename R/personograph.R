@@ -267,7 +267,7 @@ setColor <- function(icon, color) {
 #' # With different icon.style
 #' personograph(data, icon.style=4) # numeric from 1-11
 #' # Plot a thousand in a 20x50 grid
-#' personograph(data, n.icons=1000, dimensions=c(20,50))
+#' personograph(data, n.icons=1000, dimensions=c(20,50), plot.width=0.75)
 personograph <- function(data,
                  fig.title=NULL,
                  fig.cap=NULL,
