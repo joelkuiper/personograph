@@ -7,6 +7,7 @@ Authors@R: c(person("Joel", "Kuiper", email = "jkuiper@doctorevidence.com", role
 Description: Visualizes treatment effects using person icons, similar to Cates (NNT) charts.
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 LazyData: true
+URL: https://github.com/joelkuiper/personograph
 Depends:
   R (>= 3.1.0),
   grImport,
