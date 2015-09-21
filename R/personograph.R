@@ -36,12 +36,17 @@
 #' make informed decisions and policies using medical data that is
 #' more accessible, relevant and readable.}
 #'
+#' \subsection{Source & Issues}{
+#' Source code and issue tracker can be found on \href{https://github.com/joelkuiper/personograph}{Github}.
+#' }
+#'
 #' @docType package
 #' @name personograph-package
 #' @seealso \code{\link{personograph}}
 #' @seealso \code{\link{uplift}}
 #' @import grid
 #' @import grImport
+#' @import grDevices
 #' @examples
 #' # Example data
 #' data <- read.table(textConnection('
@@ -82,7 +87,7 @@ NULL
 w.median <- function(x, w) {
     ## Lifted from cwhmisc, http://www.inside-r.org/packages/cran/cwhmisc/docs/w.median
     if (missing(w)) w <- rep(1,length(x))
-    ok <- complete.cases(x, w)
+    ok <- stats::complete.cases(x, w)
     x <- x[ok]
     w <- w[ok]
     ind <- sort.list(x)
