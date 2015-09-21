@@ -9,8 +9,10 @@ License: LGPL (>= 2.0, < 3) | Mozilla Public License
 LazyData: true
 Depends:
   R (>= 3.1.0),
-  grImport
+  grImport,
 Imports:
+  stats,
+  grDevices,
   grid
 Suggests:
   meta
