@@ -1,3 +1,5 @@
+Code on [Github](https://github.com/joelkuiper/personograph).
+
 # Personograph
 
  A personograph (Kuiper-Marshall plot) is a pictographic
@@ -15,18 +17,19 @@
  it's easy to just pass a named list of percentages, colors, and an
  icon. Making it potentially useful for other use cases as well.
 
-
-![higher_is_better=F](/man/figures/green.png?raw=true)
-![higher_is_better=T](/man/figures/red.png?raw=true)
+![higher_is_better=F](https://raw.githubusercontent.com/joelkuiper/personograph/master/man/figures/green.png)
+![higher_is_better=T](https://raw.githubusercontent.com/joelkuiper/personograph/master/man/figures/red.png)
 
 ## Installation
+Latest release on [CRAN](https://cran.r-project.org/web/packages/personograph/)
 
+
+Latest development version
 ```
 # install.packages("devtools")
 devtools::install_github("joelkuiper/personograph")
 ```
 
-(submission to CRAN pending)
 
 ## Development
 Install `devtools` and `roxygen2`.
