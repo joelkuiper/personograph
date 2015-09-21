@@ -43,7 +43,7 @@
 #' @import grid
 #' @import grImport
 #' @examples
-#' # Example data from rMeta
+#' # Example data
 #' data <- read.table(textConnection('
 #'           name ev.trt n.trt ev.ctrl n.ctrl
 #' 1     Auckland     36   532      60    538
@@ -234,9 +234,16 @@ setColor <- function(icon, color) {
 #' Treat visualization).
 #' Although these could be seen as Kuiper-Marshall plots.
 #'
+#' \subsection{Supplying your own icon}{
+#' You can supply your own icon by setting \code{icon} to a \code{grImport} \code{Picture}.
+#' A \code{Picture} can be loaded with \code{grImport::readPicture} which requires a \code{grImport} XML file.
+#' Obtaining this file from a standard SVG or PDF graphics file requires conversion.
+#' The easiest way is to convert your original file to PDF and then to PostScript (PS) with the command-line \code{pdf2ps} tool, then tracing it with \code{grImport::PostScriptTrace}.
+#' See the \code{grImport} package documentation for more details.}
+#'
 #' @export personograph
 #' @param data A list of names to percentages (from 0 to 1)
-#' @param icon.style A numeric from 1-11 indicating which of the included icons to use
+#' @param icon.style A numeric from 1-11 indicating which of the included icons to use, they are mostly variations on the theme
 #' @param icon A \code{grImport} \code{Picture} for the icon, overwrites \code{icon.style}
 #' @param icon.dim The dimensions of icon as a vector \code{c(width, height)} as numerical. Calculated from the \code{dimensions} if not supplied
 #' @param n.icons Number of icons to draw, defaults to 100
@@ -245,13 +252,15 @@ setColor <- function(icon, color) {
 #' @param colors A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied
 #' @param fig.cap Figure caption
 #' @param fig.title Figure title
-#' @param draw.legend Logical if TRUE (default) draw the legend
+#' @param draw.legend Logical if TRUE (default) will draw the legend
 #' @return None.
 #' @examples
 #' data <- list(first=0.9, second=0.1)
 #' personograph(data)
 #' # With colors
 #' personograph(data, colors=list(first="red", second="blue"))
+#' # With different icon.style
+#' personograph(data, icon.style=4) # numeric from 1-11
 #' # Plot a thousand in a 20x50 grid
 #' personograph(data, n.icons=1000, dimensions=c(20,50))
 personograph <- function(data,
@@ -262,7 +271,7 @@ personograph <- function(data,
                  icon.dim=NULL,
                  icon.style=1,
                  n.icons=100,
-                 plot.width=0.75,
+                 plot.width=0.6,
                  dimensions=ceiling(sqrt(c(n.icons, n.icons))),
                  colors=as.colors(data)) {
 

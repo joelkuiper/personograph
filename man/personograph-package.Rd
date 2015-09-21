@@ -43,7 +43,7 @@ make informed decisions and policies using medical data that is
 more accessible, relevant and readable.}
 }
 \examples{
-# Example data from rMeta
+# Example data
 data <- read.table(textConnection('
           name ev.trt n.trt ev.ctrl n.ctrl
 1     Auckland     36   532      60    538
