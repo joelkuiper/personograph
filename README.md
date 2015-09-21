@@ -21,10 +21,10 @@ Code on [Github](https://github.com/joelkuiper/personograph).
 ![higher_is_better=T](https://raw.githubusercontent.com/joelkuiper/personograph/master/man/figures/red.png)
 
 ## Installation
-Latest release on [CRAN](https://cran.r-project.org/web/packages/personograph/)
+**Latest release** on [CRAN](https://cran.r-project.org/web/packages/personograph/)
 
 
-Latest development version
+**Latest development version**
 ```
 # install.packages("devtools")
 devtools::install_github("joelkuiper/personograph")
