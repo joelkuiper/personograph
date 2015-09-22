@@ -174,10 +174,10 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
         cer <- 1 - cer
     }
 
-    ## [good outcome] people who are good no matter what intervention
+    ## [good outcome] people who have a good outcome no matter what intervention
     good <- min(ier, cer)
 
-    ## [bad outcome] people who are bad no matter what intervention
+    ## [bad outcome] people who have bad outcome no matter what intervention
     bad <- 1-max(ier, cer)
 
     ## [intervention benefit] people who would be benefit from the intervention
