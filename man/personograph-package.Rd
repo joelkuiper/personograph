@@ -70,7 +70,7 @@ if (requireNamespace("meta", quietly = TRUE)) { # use meta if available
     point <- 0.5710092
 }
 
-# Approximate the Control Event Rates using a weighed median
+# Approximate the Control Event Rates using a weighted median
 cer <- w.approx.cer(data[["ev.ctrl"]], data[["n.ctrl"]])
 
 # Calculate the Intervention Event Rates (IER) from the CER and point estimate
@@ -79,7 +79,7 @@ ier <- calc.ier(cer, point, sm)
 # Calcaulte the "uplift" statistics
 # Note that this depends on the direction of the outcome effect (higher_is_better)
 u <- uplift(ier, cer, higher_is_better=FALSE)
-plot(u, fig.title="Example", fig.cap="Example from rMeta")
+plot(u, fig.title="Example", fig.cap="Example")
 }
 \seealso{
 \code{\link{personograph}}
