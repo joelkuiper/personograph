@@ -263,7 +263,7 @@ setColor <- function(icon, color) {
 #'     up to \code{n.icons}. 'ignore' simply draws less icons, 'most' adds an
 #'     icon to the largest group, 'least' to the smallest.
 #'     If a name from \code{data} is supplied it will added to that element.
-#' @param fudge Fudge factor for the icon size, substracted from the icon size.
+#' @param fudge Fudge factor for the icon size, substracted from the \code{icon.size}.
 #' @param round.fn Function that is applied to round \code{n.icons}. See also \code{force.fill}.
 #' @return None.
 #' @examples
@@ -344,7 +344,6 @@ personograph <- function(data,
         colors <- as.colors(data)
     }
 
-    print(counts)
     if(sum(unlist(counts)) < n.icons) {
         ordered.names <- data.names[order(unlist(counts))]
         addTo <- function(counts, name) {
@@ -363,7 +362,6 @@ personograph <- function(data,
             counts <- addTo(counts, force.fill)
         }
     }
-    print(counts)
 
     flat <- unlist(lapply(data.names, function(name) { rep(name, counts[[name]])}))
 

@@ -31,7 +31,7 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{dimensions}{A vector of \code{c(rows, columns)} for the dimensions of the grid}
 
-\item{fudge}{Fudge factor for the icon size, substracted from the icon size.}
+\item{fudge}{Fudge factor for the icon size, substracted from the \code{icon.size}.}
 
 \item{force.fill}{A character of 'ignore' (default), 'most', or 'least', or one of the names from data.
 Defines the behaviour for cases when the rounding doesn't add
