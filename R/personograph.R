@@ -258,13 +258,13 @@ setColor <- function(icon, color) {
 #' @param fig.cap Figure caption
 #' @param fig.title Figure title
 #' @param draw.legend Logical if TRUE (default) will draw the legend
-#' @param force.fill A character of 'ignore' (default), 'most', or 'least', or one of the names from data.
+#' @param force.fill A character vector of 'ignore' (default), 'most', 'least', or one of the names from \code{data}.
 #'     Defines the behaviour for cases when the rounding doesn't add
 #'     up to \code{n.icons}. 'ignore' simply draws less icons, 'most' adds an
 #'     icon to the largest group, 'least' to the smallest.
 #'     If a name from \code{data} is supplied it will added to that element
 #' @param fudge Fudge factor for the icon size, substracted from the \code{icon.size}
-#' @param round.fn Function that is applied to round \code{n.icons}. See also \code{force.fill}
+#' @param round.fn Function that is applied to round the percentages from \code{data} to \code{n.icons}. See also \code{force.fill}
 #' @return None.
 #' @examples
 #' data <- list(first=0.9, second=0.1)
@@ -350,7 +350,6 @@ personograph <- function(data,
             counts[[name]] <- counts[[name]] + 1
             warning(paste("adding an extra icon to", name, "to fill to", n.icons))
             counts
-
         }
         if(force.fill == "least") {
             counts <- addTo(counts, tail(ordered.names, n = 1))
