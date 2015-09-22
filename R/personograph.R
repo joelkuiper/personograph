@@ -346,19 +346,19 @@ personograph <- function(data,
 
     if(sum(unlist(counts)) < n.icons) {
         ordered.names <- data.names[order(unlist(counts))]
-        addTo <- function(counts, name) {
+        forceFill <- function(counts, name) {
             counts[[name]] <- counts[[name]] + 1
-            warning(paste("adding an extra icon to", name, "to fill to", n.icons))
+            warning(paste0("adding an extra icon to ", name, ", to fill to ", n.icons))
             counts
         }
         if(force.fill == "least") {
-            counts <- addTo(counts, tail(ordered.names, n = 1))
+            counts <- forceFill(counts, tail(ordered.names, n = 1))
         } else if(force.fill == "most") {
-            counts <- addTo(counts, ordered.names[[1]])
+            counts <- forceFill(counts, ordered.names[[1]])
         } else if(force.fill == "ignore") {
-            warning(paste("rounded sum of icons does not add up to", n.icons, "drawing less icons"))
+            warning(paste0("rounded sum of icons does not add up to ", n.icons, ", drawing less icons"))
         } else {
-            counts <- addTo(counts, force.fill)
+            counts <- forceFill(counts, force.fill)
         }
     }
 
