@@ -262,9 +262,9 @@ setColor <- function(icon, color) {
 #'     Defines the behaviour for cases when the rounding doesn't add
 #'     up to \code{n.icons}. 'ignore' simply draws less icons, 'most' adds an
 #'     icon to the largest group, 'least' to the smallest.
-#'     If a name from \code{data} is supplied it will added to that element.
-#' @param fudge Fudge factor for the icon size, substracted from the \code{icon.size}.
-#' @param round.fn Function that is applied to round \code{n.icons}. See also \code{force.fill}.
+#'     If a name from \code{data} is supplied it will added to that element
+#' @param fudge Fudge factor for the icon size, substracted from the \code{icon.size}
+#' @param round.fn Function that is applied to round \code{n.icons}. See also \code{force.fill}
 #' @return None.
 #' @examples
 #' data <- list(first=0.9, second=0.1)

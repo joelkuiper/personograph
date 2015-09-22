@@ -31,15 +31,15 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 
 \item{dimensions}{A vector of \code{c(rows, columns)} for the dimensions of the grid}
 
-\item{fudge}{Fudge factor for the icon size, substracted from the \code{icon.size}.}
+\item{fudge}{Fudge factor for the icon size, substracted from the \code{icon.size}}
 
 \item{force.fill}{A character of 'ignore' (default), 'most', or 'least', or one of the names from data.
 Defines the behaviour for cases when the rounding doesn't add
 up to \code{n.icons}. 'ignore' simply draws less icons, 'most' adds an
 icon to the largest group, 'least' to the smallest.
-If a name from \code{data} is supplied it will added to that element.}
+If a name from \code{data} is supplied it will added to that element}
 
-\item{round.fn}{Function that is applied to round \code{n.icons}. See also \code{force.fill}.}
+\item{round.fn}{Function that is applied to round \code{n.icons}. See also \code{force.fill}}
 
 \item{colors}{A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied}
 }
