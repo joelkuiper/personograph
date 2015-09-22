@@ -7,6 +7,7 @@
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
   icon = NULL, icon.dim = NULL, icon.style = 1, n.icons = 100,
   plot.width = 0.6, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
+  fudge = 0.0075, force.fill = "ignore", round.fn = round.standard,
   colors = as.colors(data))
 }
 \arguments{
@@ -29,6 +30,16 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 \item{plot.width}{The percentage of width that the main plotting area should take (with respect to the frame)}
 
 \item{dimensions}{A vector of \code{c(rows, columns)} for the dimensions of the grid}
+
+\item{fudge}{Fudge factor for the icon size, substracted from the icon size.}
+
+\item{force.fill}{A character of 'ignore' (default), 'most', or 'least', or one of the names from data.
+Defines the behaviour for cases when the rounding doesn't add
+up to \code{n.icons}. 'ignore' simply draws less icons, 'most' adds an
+icon to the largest group, 'least' to the smallest.
+If a name from \code{data} is supplied it will added to that element.}
+
+\item{round.fn}{Function that is applied to round \code{n.icons}. See also \code{force.fill}.}
 
 \item{colors}{A vector of names to colors, must match the names in data. Uses \code{gray.colors} style if none supplied}
 }

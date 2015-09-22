@@ -25,7 +25,7 @@ A list of S3 class \code{personograph.uplift} with the following elements:
 Can be plotted as a personograph with the S3 generic \code{plot}.
 }
 \description{
-Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad, and good
+Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad outcome, and good outcome
 from the Intervention Event Rates (IER) and Control Event Rates (CER).
 Note that the result depends on the direction of the outcome measure,
 e.g. \code{higher_is_better = T} (default) for intervention efficacy, \code{higher_is_better = F} for

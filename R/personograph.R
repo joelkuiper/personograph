@@ -136,7 +136,7 @@ calc.ier <- function(cer, point, sm) {
 
 #' "Uplift" from IER and CER
 #'
-#' Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad, and good
+#' Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad outcome, and good outcome
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
 #' e.g. \code{higher_is_better = T} (default) for intervention efficacy, \code{higher_is_better = F} for
@@ -203,9 +203,9 @@ as.colors <- function(lst, palette=gray.colors) {
 }
 
 round.standard <- function(x) {
-    # rounds numbers conventionally
-    # so that round.standard(0.5)==1
-    return(floor(x+0.5))
+    ## rounds numbers conventionally
+    ## so that round.standard(0.5)==1
+    floor(x + sign(x) * 0.5)
 }
 
 round.with.warn <- function(x, f=round.standard, name=NULL) {
@@ -217,7 +217,7 @@ round.with.warn <- function(x, f=round.standard, name=NULL) {
 }
 
 naturalfreq <- function(ar, denominator=100) {
-    numerator <- ar * denominator
+    numerator <- ar
     if(numerator > 0 && numerator <0.5) {
         return(paste0("< 1/", denominator))
     } else {
@@ -258,6 +258,13 @@ setColor <- function(icon, color) {
 #' @param fig.cap Figure caption
 #' @param fig.title Figure title
 #' @param draw.legend Logical if TRUE (default) will draw the legend
+#' @param force.fill A character of 'ignore' (default), 'most', or 'least', or one of the names from data.
+#'     Defines the behaviour for cases when the rounding doesn't add
+#'     up to \code{n.icons}. 'ignore' simply draws less icons, 'most' adds an
+#'     icon to the largest group, 'least' to the smallest.
+#'     If a name from \code{data} is supplied it will added to that element.
+#' @param fudge Fudge factor for the icon size, substracted from the icon size.
+#' @param round.fn Function that is applied to round \code{n.icons}. See also \code{force.fill}.
 #' @return None.
 #' @examples
 #' data <- list(first=0.9, second=0.1)
@@ -278,6 +285,9 @@ personograph <- function(data,
                  n.icons=100,
                  plot.width=0.6,
                  dimensions=ceiling(sqrt(c(n.icons, n.icons))),
+                 fudge=0.0075,
+                 force.fill="ignore",
+                 round.fn=round.standard,
                  colors=as.colors(data)) {
 
     devAskNewPage(FALSE)
@@ -328,11 +338,32 @@ personograph <- function(data,
     data.names <- names(data)
     counts <- sapply(data.names, function(name) {
         x <- data[[which(data.names == name)]]
-        round.with.warn(x * n.icons, name=name)}, simplify = FALSE, USE.NAMES = TRUE)
+        round.with.warn(x * n.icons, f=round.fn, name=name)}, simplify = FALSE, USE.NAMES = TRUE)
 
     if(is.null(colors)) {
         colors <- as.colors(data)
     }
+
+    print(counts)
+    if(sum(unlist(counts)) < n.icons) {
+        ordered.names <- data.names[order(unlist(counts))]
+        addTo <- function(counts, name) {
+            counts[[name]] <- counts[[name]] + 1
+            warning(paste("adding an extra icon to", name, "to fill to", n.icons))
+            counts
+
+        }
+        if(force.fill == "least") {
+            counts <- addTo(counts, tail(ordered.names, n = 1))
+        } else if(force.fill == "most") {
+            counts <- addTo(counts, ordered.names[[1]])
+        } else if(force.fill == "ignore") {
+            warning(paste("rounded sum of icons does not add up to", n.icons, "drawing less icons"))
+        } else {
+            counts <- addTo(counts, force.fill)
+        }
+    }
+    print(counts)
 
     flat <- unlist(lapply(data.names, function(name) { rep(name, counts[[name]])}))
 
@@ -377,7 +408,6 @@ personograph <- function(data,
         coords <- coordinates(mask, icon.width, icon.height)
         if(length(coords$x) > 0 && length(coords$y) > 0) {
             icon <- setColor(icon, color)
-            fudge <- 0.0075
             grid.symbols(icon, x=coords$x, y=coords$y, size=max(icon.height, icon.width) - fudge)
         }
     }
@@ -393,7 +423,7 @@ personograph <- function(data,
         legendGrobs <- list()
         legendWidths <- list()
         for(name in data.names) {
-            label <- paste(naturalfreq(data[[name]], denominator=n.icons), name)
+            label <- paste(naturalfreq(counts[[name]], denominator=n.icons), name)
             grob <- textGrob(label, gp=font, just="left", x=-0)
             legendGrobs[[name]] <- grob
             legendWidths[[name]] <- widthDetails(grob)
