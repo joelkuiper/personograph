@@ -6,7 +6,7 @@
 \title{Generate personograph plots from data}
 \description{
 A personograph (Kuiper-Marshall plot) is a pictographic
-representation of relative harm and benefit from an intervention. It is
+representation of (relative) harm and benefit from an intervention. It is
 similar to
 \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 Plots)}. Each icon on the grid is colored to indicate whether that
@@ -63,8 +63,7 @@ data <- read.table(textConnection('
 sm <- "RR" # The outcome measure (either Relative Risk or Odds Ratio)
 if (requireNamespace("meta", quietly = TRUE)) { # use meta if available
     ## Calculate the pooled OR or RR point estimate
-    m <- with(data,
-           meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
+    m <- with(data, meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
     point <- exp(m$TE.random) # meta returns random effects estimate on the log scale
 } else {
     # Calculated Random Effects RR, using the meta package

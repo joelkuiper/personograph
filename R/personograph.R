@@ -1,7 +1,7 @@
 #' Generate personograph plots from data
 #'
 #' A personograph (Kuiper-Marshall plot) is a pictographic
-#' representation of relative harm and benefit from an intervention. It is
+#' representation of (relative) harm and benefit from an intervention. It is
 #' similar to
 #' \href{http://www.nntonline.net/visualrx/examples/}{Visual Rx (Cates
 #' Plots)}. Each icon on the grid is colored to indicate whether that
@@ -64,8 +64,7 @@
 #' sm <- "RR" # The outcome measure (either Relative Risk or Odds Ratio)
 #' if (requireNamespace("meta", quietly = TRUE)) { # use meta if available
 #'     ## Calculate the pooled OR or RR point estimate
-#'     m <- with(data,
-#'            meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
+#'     m <- with(data, meta::metabin(ev.trt, n.trt, ev.ctrl, n.ctrl, sm=sm))
 #'     point <- exp(m$TE.random) # meta returns random effects estimate on the log scale
 #' } else {
 #'     # Calculated Random Effects RR, using the meta package
@@ -109,7 +108,7 @@ w.median <- function(x, w) {
 #'
 #' @export
 #' @param ev.ctrl Vector of event rates in the control group (/arm)
-#' @param n.ctrl A vector of sample sizes in the control group (/arm)
+#' @param n.ctrl Vector of sample sizes in the control group (/arm)
 #' @return Approximated Control Event Rates (CER)
 w.approx.cer <- function(ev.ctrl, n.ctrl) {
     study_cer <- ev.ctrl / n.ctrl
@@ -136,7 +135,7 @@ calc.ier <- function(cer, point, sm) {
 
 #' "Uplift" from IER and CER
 #'
-#' Calculates the percentage (from 0 to 1) of people intervention benefit, intervention harm, bad outcome, and good outcome
+#' Calculates the percentage (from 0 to 1) of people who have an intervention benefit, intervention harm, bad outcome regardless, and good outcome regardless
 #' from the Intervention Event Rates (IER) and Control Event Rates (CER).
 #' Note that the result depends on the direction of the outcome measure,
 #' e.g. \code{higher_is_better = T} (default) for intervention efficacy, \code{higher_is_better = F} for

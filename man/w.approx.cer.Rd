@@ -9,7 +9,7 @@ w.approx.cer(ev.ctrl, n.ctrl)
 \arguments{
 \item{ev.ctrl}{Vector of event rates in the control group (/arm)}
 
-\item{n.ctrl}{A vector of sample sizes in the control group (/arm)}
+\item{n.ctrl}{Vector of sample sizes in the control group (/arm)}
 }
 \value{
 Approximated Control Event Rates (CER)
