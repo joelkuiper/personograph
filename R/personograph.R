@@ -282,7 +282,7 @@ personograph <- function(data,
                  icon.dim=NULL,
                  icon.style=1,
                  n.icons=100,
-                 plot.width=0.6,
+                 plot.width=0.75,
                  dimensions=ceiling(sqrt(c(n.icons, n.icons))),
                  fudge=0.0075,
                  force.fill="ignore",
@@ -444,7 +444,7 @@ personograph <- function(data,
         for(name in data.names)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
-            grid.circle(x=0.4, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
+            grid.circle(x=0.5, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
             popViewport()
 
             idx <- idx + 1
