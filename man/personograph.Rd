@@ -6,9 +6,9 @@
 \usage{
 personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
   icon = NULL, icon.dim = NULL, icon.style = 1, n.icons = 100,
-  plot.width = 0.6, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
-  fudge = 0.0075, force.fill = "ignore", round.fn = round.standard,
-  colors = as.colors(data))
+  plot.width = 0.75, dimensions = ceiling(sqrt(c(n.icons, n.icons))),
+  fudge = 0.0075, legend.show.zeros = TRUE, force.fill = "ignore",
+  round.fn = round.standard, colors = as.colors(data))
 }
 \arguments{
 \item{data}{A list of names to percentages (from 0 to 1)}
@@ -32,6 +32,8 @@ personograph(data, fig.title = NULL, fig.cap = NULL, draw.legend = T,
 \item{dimensions}{A vector of \code{c(rows, columns)} for the dimensions of the grid}
 
 \item{fudge}{Fudge factor for the icon size, substracted from the \code{icon.size}}
+
+\item{legend.show.zeros}{Logical if TRUE indicating whether to show zero (0) values in the legend.}
 
 \item{force.fill}{A character vector of 'ignore' (default), 'most', 'least', or one of the names from \code{data}.
 Defines the behaviour for cases when the rounding doesn't add

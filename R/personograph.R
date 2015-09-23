@@ -263,7 +263,7 @@ setColor <- function(icon, color) {
 #'     If a name from \code{data} is supplied it will added to that element
 #' @param fudge Fudge factor for the icon size, substracted from the \code{icon.size}
 #' @param round.fn Function that is applied to round the percentages from \code{data} to \code{n.icons}. See also \code{force.fill}
-#' @param legend.show.zeros, Logical if TRUE indicating whether to show zero (0) values in the legend.
+#' @param legend.show.zeros Logical if TRUE indicating whether to show zero (0) values in the legend.
 #' @return None.
 #' @examples
 #' data <- list(first=0.9, second=0.1)
@@ -419,9 +419,6 @@ personograph <- function(data,
         filtered.data.names <- if(legend.show.zeros) {data.names } else {data.names[which(data != 0)]}
 
         legendCols <- length(filtered.data.names)
-        print(filtered.data.names)
-        print(data.names[which(data != 0)])
-
         legendGrobs <- list()
         legendWidths <- list()
         for(name in filtered.data.names) {
