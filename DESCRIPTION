@@ -1,6 +1,6 @@
 Package: personograph
 Title: Pictographic Representation of Treatment Effects
-Version: 0.1.1
+Version: 0.1.2
 Author: Joel Kuiper [aut, cre], Iain Marshall [ctb]
 Maintainer: Joel Kuiper <jkuiper@doctorevidence.com>
 Authors@R: c(person("Joel", "Kuiper", email = "jkuiper@doctorevidence.com", role = c("aut", "cre")), person("Iain", "Marshall", email = "iain.marshall@kcl.ac.uk", role = c("ctb")))
