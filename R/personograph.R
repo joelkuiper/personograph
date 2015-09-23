@@ -185,11 +185,10 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     ## [intervention harm] people who would harmed by intervention
     harm <- max(cer-ier, 0)
 
-    if(higher_is_better) {
-        result <- list("good outcome"=good, "intervention harm"=harm, "bad outcome"=bad)
-    } else {
-        result <- list("good outcome"=good, "intervention benefit"=benefit, "bad outcome"=bad)
-    }
+    result <- list("good outcome"=good,
+                  "bad outcome"=bad,
+                  "intervention harm"=harm,
+                  "intervention benefit"=benefit)
 
     class(result) <- "personograph.uplift"
     result
@@ -264,6 +263,7 @@ setColor <- function(icon, color) {
 #'     If a name from \code{data} is supplied it will added to that element
 #' @param fudge Fudge factor for the icon size, substracted from the \code{icon.size}
 #' @param round.fn Function that is applied to round the percentages from \code{data} to \code{n.icons}. See also \code{force.fill}
+#' @param legend.show.zeros, Logical if TRUE indicating whether to show zero (0) values in the legend.
 #' @return None.
 #' @examples
 #' data <- list(first=0.9, second=0.1)
@@ -285,6 +285,7 @@ personograph <- function(data,
                  plot.width=0.75,
                  dimensions=ceiling(sqrt(c(n.icons, n.icons))),
                  fudge=0.0075,
+                 legend.show.zeros=TRUE,
                  force.fill="ignore",
                  round.fn=round.standard,
                  colors=as.colors(data)) {
@@ -415,12 +416,15 @@ personograph <- function(data,
 
     if(draw.legend) {
         seekViewport("legend")
+        filtered.data.names <- if(legend.show.zeros) {data.names } else {data.names[which(data != 0)]}
 
-        legendCols <- length(data.names)
+        legendCols <- length(filtered.data.names)
+        print(filtered.data.names)
+        print(data.names[which(data != 0)])
 
         legendGrobs <- list()
         legendWidths <- list()
-        for(name in data.names) {
+        for(name in filtered.data.names) {
             label <- paste(naturalfreq(counts[[name]], denominator=n.icons), name)
             grob <- textGrob(label, gp=font, just="left", x=-0)
             legendGrobs[[name]] <- grob
@@ -439,7 +443,7 @@ personograph <- function(data,
 
 
         idx <- 0
-        for(name in data.names)  {
+        for(name in filtered.data.names)  {
             idx <- idx + 1
             pushViewport(viewport(layout.pos.row=1, layout.pos.col=idx))
             grid.circle(x=0.5, r=0.35, gp=gpar(fill=colors[[name]], col=NA))
@@ -469,5 +473,5 @@ personograph <- function(data,
 #' @seealso \code{\link{personograph}}
 plot.personograph.uplift <- function(x, ...) {
     colors <- list("intervention harm"="firebrick3", "intervention benefit"="olivedrab3", "bad outcome"="azure4", "good outcome"="azure2")
-    personograph(x, colors=colors, ...)
+    personograph(x, colors=colors, legend.show.zeros=F, ...)
 }
