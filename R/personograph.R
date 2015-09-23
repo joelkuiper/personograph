@@ -365,8 +365,6 @@ personograph <- function(data,
 
     flat <- unlist(lapply(data.names, function(name) { rep(name, counts[[name]])}))
 
-    stopifnot(length(flat) == n.icons)
-
     seekViewport("plot")
     pushViewport(viewport(width=unit(plot.width, "npc")))
 
