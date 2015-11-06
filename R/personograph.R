@@ -103,16 +103,32 @@ w.median <- function(x, w) {
 
 #' Calculate the CER (Control Event Rates)
 #'
-#' Calculates the CER from the data, this is a weighted approximation of absolute
-#' risk with control (from 0 to 1)
+#' Calculates the CER from the data, this is a approximation of absolute
+#' risk in the control population (from 0 to 1).
+#'
+#' By default it uses a weighted median of the indivdual control event rates. The weighted median has the benefit of always returning
+#' an event rate that actually /did/ occur. However, it is possible that this might return a CER of 0.
+#' In this case we fall back to a weighted mean, and throw a warning.
+#' If this too returns a CER of 0, it probably means that there was not enough data to estimate the control risk accurately.
+#' In this case we recommend you obtain an estimate of the risk in the control group, for example from an observational study or expert opinion.
 #'
 #' @export
 #' @param ev.ctrl Vector of event rates in the control group (/arm)
 #' @param n.ctrl Vector of sample sizes in the control group (/arm)
 #' @return Approximated Control Event Rates (CER)
 w.approx.cer <- function(ev.ctrl, n.ctrl) {
+
     study_cer <- ev.ctrl / n.ctrl
-    w.median(study_cer, n.ctrl)
+    result <- w.median(study_cer, n.ctrl)
+    if(result == 0) { # Weighted median was zero
+        result <- sum(ev.ctrl) / sum(n.ctrl)
+        warning("The estimated control arm risk from the studies using the weighted median was 0, using the weighted mean instead.", call.=F)
+    }
+
+    if(result == 0) { # Still zero!
+        warning("The control arm risk was estimated as 0 from the studies. This probably indicates that the true control risk is a very small value greater than zero, but the studies were not able to estimate it accurately. Please note this may lead to unexpected results in the personograph chart. We recommend you obtain an estimate of the risk in the control group, for example from an observational study or expert opinion.", call.=F)
+    }
+    result
 }
 
 #' Calculate the IER (Intervention Event Rates)
@@ -129,7 +145,7 @@ calc.ier <- function(cer, point, sm) {
     } else if(sm == "OR") {
         return(cer * (point / (1 - (cer * (1 - point)))))
     } else {
-        stop("Sm need to be OR (Odds Ratios) or RR (Relative Risk)")
+        stop("sm need to be OR (Odds Ratios) or RR (Relative Risk)")
     }
 }
 
@@ -338,13 +354,21 @@ personograph <- function(data,
     }
 
     data.names <- names(data)
-    counts <- sapply(data.names, function(name) {
-        x <- data[[which(data.names == name)]]
-        round.with.warn(x * n.icons, f=round.fn, name=name)}, simplify = FALSE, USE.NAMES = TRUE)
 
     if(is.null(colors)) {
         colors <- as.colors(data)
     }
+
+    ## round based on *cumulative* sum
+    ## this means that icons will be aligned to the grid, and
+    ## will avoid problems with having more icons than the
+    ## grid allows due to rounding errors
+    n.elements <- length(data)
+    cum_data <- cumsum(c(data, 0))
+
+    rounded <- round(cum_data * n.icons)
+    rounded[2:n.elements] <- rounded[2:n.elements] - rounded[1:n.elements-1]
+    counts <- round.with.warn(rounded, f=round.fn, name=name)
 
     if(sum(unlist(counts)) < n.icons) {
         ordered.names <- data.names[order(unlist(counts))]
