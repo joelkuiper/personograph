@@ -1,4 +1,5 @@
 ^.*\.Rproj$
+^.*\.Rcheck$
 ^\.Rproj\.user$
 ^.DS_Store$
 ^plots.pdf$

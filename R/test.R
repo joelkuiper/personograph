@@ -58,22 +58,3 @@ data <- read.table(textConnection('
 ## png("man/figures/red.png", 800, 1000)
 ## plot(u, fig.title="Example", fig.cap="Example from rMeta")
 ## dev.off()
-
-library(jsonlite)
-
-json <- '{"data":[{"slab":"Thompson PL (2004)","ai":42,"n1i":1710,"ci":37,"n2i":1698,"days":28},{"slab":"Colhoun HM (2004)","ai":7,"n1i":1428,"ci":9,"n2i":1410,"days":1715.5},{"slab":"Nakamura Y (1996)","ai":0,"n1i":62,"ci":2,"n2i":62,"days":91},{"slab":"_PMSGCRP (1993)","ai":0,"n1i":530,"ci":5,"n2i":532,"days":182},{"slab":"Sever PS (2003)","ai":21,"n1i":5168,"ci":24,"n2i":5137,"days":1204.5},{"slab":"Riegger G (1999)","ai":1,"n1i":187,"ci":5,"n2i":178,"days":365},{"slab":"Schwartz GG (2001)","ai":91,"n1i":1538,"ci":106,"n2i":1548,"days":112},{"slab":"Sacks FM (1996)","ai":317,"n1i":2081,"ci":359,"n2i":2078,"days":2263},{"slab":"Herd JA (1998)","ai":8,"n1i":157,"ci":12,"n2i":164,"days":912.5},{"slab":"Durazzo AE (2004)","ai":0,"n1i":50,"ci":1,"n2i":50,"days":182},{"slab":"Downs JR (1998)","ai":60,"n1i":3304,"ci":87,"n2i":3301,"days":2628},{"slab":"Kjekshus J (2007)","ai":65,"n1i":2514,"ci":71,"n2i":2497,"days":985.5}]}'
-
-data <- fromJSON(json)$data
-
-cer <- w.approx.cer(data[["ci"]], data[["n2i"]])
-
-sm <- "RR"
-## Calculate the pooled OR or RR point estimate, we use meta package here
-m <- with(data,
-         meta::metabin(ai, n1i, ci, n2i, sm=sm))
-point <- exp(m$TE.random) # meta returns outcomes on the log scale
-
-ier <- calc.ier(cer, point, sm)
-
-u <- uplift(ier, cer, F)
-plot(u, fig.title="Example", fig.cap="Example from rMeta", n.icons=1000, dim=c(20,50))
