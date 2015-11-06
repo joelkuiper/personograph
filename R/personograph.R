@@ -47,6 +47,7 @@
 #' @import grid
 #' @import grImport
 #' @import grDevices
+#' @importFrom utils tail
 #' @examples
 #' # Example data
 #' data <- read.table(textConnection('
@@ -193,13 +194,13 @@ uplift <- function(ier, cer, higher_is_better=NULL) {
     good <- min(ier, cer)
 
     ## [bad outcome] people who have bad outcome no matter what intervention
-    bad <- 1-max(ier, cer)
+    bad <- 1 - max(ier, cer)
 
     ## [intervention benefit] people who would be benefit from the intervention
-    benefit <- max(ier-cer, 0)
+    benefit <- max(ier - cer, 0)
 
     ## [intervention harm] people who would harmed by intervention
-    harm <- max(cer-ier, 0)
+    harm <- max(cer - ier, 0)
 
     result <- list("good outcome"=good,
                   "bad outcome"=bad,
@@ -378,7 +379,7 @@ personograph <- function(data,
             counts
         }
         if(force.fill == "least") {
-            counts <- forceFill(counts, tail(ordered.names, n = 1))
+            counts <- forceFill(counts, utils::tail(ordered.names, n = 1))
         } else if(force.fill == "most") {
             counts <- forceFill(counts, ordered.names[[1]])
         } else if(force.fill == "ignore") {
