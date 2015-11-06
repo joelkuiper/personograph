@@ -20,7 +20,7 @@ risk in the control population (from 0 to 1).
 }
 \details{
 By default it uses a weighted median of the indivdual control event rates. The weighted median has the benefit of always returning
-an event rate that actually /did/ occur. However, it is possible that this might return a CER of 0.
+an event rate that actually did occur. However, it is possible that this might return a CER of 0.
 In this case we fall back to a weighted mean, and throw a warning.
 If this too returns a CER of 0, it probably means that there was not enough data to estimate the control risk accurately.
 In this case we recommend you obtain an estimate of the risk in the control group, for example from an observational study or expert opinion.
