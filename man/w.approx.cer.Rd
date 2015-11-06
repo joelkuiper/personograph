@@ -15,7 +15,14 @@ w.approx.cer(ev.ctrl, n.ctrl)
 Approximated Control Event Rates (CER)
 }
 \description{
-Calculates the CER from the data, this is a weighted approximation of absolute
-risk with control (from 0 to 1)
+Calculates the CER from the data, this is a approximation of absolute
+risk in the control population (from 0 to 1).
+}
+\details{
+By default it uses a weighted median of the indivdual control event rates. The weighted median has the benefit of always returning
+an event rate that actually /did/ occur. However, it is possible that this might return a CER of 0.
+In this case we fall back to a weighted mean, and throw a warning.
+If this too returns a CER of 0, it probably means that there was not enough data to estimate the control risk accurately.
+In this case we recommend you obtain an estimate of the risk in the control group, for example from an observational study or expert opinion.
 }
 

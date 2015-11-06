@@ -1,9 +1,9 @@
 Package: personograph
 Title: Pictographic Representation of Treatment Effects
-Version: 0.1.2
-Author: Joel Kuiper [aut, cre], Iain Marshall [ctb]
+Version: 0.1.3
+Author: Joel Kuiper [aut, cre], Iain Marshall [aut]
 Maintainer: Joel Kuiper <jkuiper@doctorevidence.com>
-Authors@R: c(person("Joel", "Kuiper", email = "jkuiper@doctorevidence.com", role = c("aut", "cre")), person("Iain", "Marshall", email = "iain.marshall@kcl.ac.uk", role = c("ctb")))
+Authors@R: c(person("Joel", "Kuiper", email = "jkuiper@doctorevidence.com", role = c("aut", "cre")), person("Iain", "Marshall", email = "iain.marshall@kcl.ac.uk", role = c("aut")))
 Description: Visualizes treatment effects using person icons, similar to Cates (NNT) charts.
 License: LGPL (>= 2.0, < 3) | Mozilla Public License
 LazyData: true
