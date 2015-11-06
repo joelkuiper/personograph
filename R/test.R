@@ -40,7 +40,7 @@ data <- read.table(textConnection('
 5 Diazgranado   10  18   0  18     1
 '), header=TRUE)
 
-cer <- w.approx.cer(data$ci, data$n2i)
+# cer <- w.approx.cer(data$ci, data$n2i)
 
 ## Draw documentation graphics
 ## u <- uplift(ier, cer, F)
