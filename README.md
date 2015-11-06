@@ -26,7 +26,7 @@ Code on [Github](https://github.com/joelkuiper/personograph).
 
 **Latest development version**
 ```
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("joelkuiper/personograph")
 ```
 
