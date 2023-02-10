@@ -307,7 +307,7 @@ personograph <- function(data,
                  round.fn=round.standard,
                  colors=as.colors(data)) {
 
-    stopifnot(sum(unlist(data)) == 1)
+    stopifnot(all.equal(sum(unlist(data)), 1))
 
     devAskNewPage(FALSE)
     grid.newpage()
