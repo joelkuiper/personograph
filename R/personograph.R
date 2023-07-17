@@ -225,7 +225,7 @@ round.standard <- function(x) {
 
 round.with.warn <- function(x, f=round.standard, name=NULL) {
     rounded <- f(x)
-    if(x > 0 && rounded == 0) {
+    if(all(x > 0) && all(rounded == 0)) {
         warning(paste("truncating", ifelse(is.null(name), "a", name), "non-zero value of", x, "to 0"))
     }
     rounded
