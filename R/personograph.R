@@ -78,7 +78,7 @@
 #' # Calculate the Intervention Event Rates (IER) from the CER and point estimate
 #' ier <- calc.ier(cer, point, sm)
 #'
-#' # Calcaulte the "uplift" statistics
+#' # Calculate the "uplift" statistics
 #' # Note that this depends on the direction of the outcome effect (higher_is_better)
 #' u <- uplift(ier, cer, higher_is_better=FALSE)
 #' plot(u, fig.title="Example", fig.cap="Example")
@@ -107,7 +107,7 @@ w.median <- function(x, w) {
 #' Calculates the CER from the data, this is a approximation of absolute
 #' risk in the control population (from 0 to 1).
 #'
-#' By default it uses a weighted median of the indivdual control event rates. The weighted median has the benefit of always returning
+#' By default it uses a weighted median of the individual control event rates. The weighted median has the benefit of always returning
 #' an event rate that actually did occur. However, it is possible that this might return a CER of 0.
 #' In this case we fall back to a weighted mean, and throw a warning.
 #' If this too returns a CER of 0, it probably means that there was not enough data to estimate the control risk accurately.
@@ -248,7 +248,7 @@ setColor <- function(icon, color) {
 #' Plots a personograph
 #'
 #' Plots a personograph from a named list with percentages (must sum to
-#' 1). A personograph is a graphical represenation of relative benefit
+#' 1). A personograph is a graphical representation of relative benefit
 #' or harm, using a grid of icons with different colors. Its intended
 #' use is similar to that of Cates Plots (Visual Rx, Number Needed to
 #' Treat visualization).
